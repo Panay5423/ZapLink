@@ -1,0 +1,82 @@
+<div class="login-container">
+  <div class="login-card">
+    <h2>Welcome Back </h2>
+    <p>Please login to continue</p>
+
+    <form (ngSubmit)="login()">
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          [(ngModel)]="formData.email"
+          name="email"
+          placeholder="Enter your email"
+          required
+        />
+      </div>
+
+      <!-- Password -->
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          [(ngModel)]="formData.password"
+          name="password"
+          placeholder="Enter your password"
+          required
+        />
+      </div>
+
+      <!-- Login Button -->
+<button type="submit" class="login-btn">Login</button>
+
+<!-- Forgot Password Button -->
+<button
+  type="button"
+  class="forgot-btn"
+  routerLink="/forgot-password"
+
+   (click)="forgotPassword()"
+> 
+  Forgot Password?
+</button>
+
+<div class="modal-backdrop" *ngIf="showForgotModal" (click)="closeForgotModal()">
+  <div class="modal-card" (click)="$event.stopPropagation()">
+    <button class="modal-close" (click)="closeForgotModal()">✕</button>
+    <h3>Reset Password</h3>
+    <p>Enter your email and we'll send a reset link.</p>
+
+    <form (ngSubmit)="sendResetLink()" #resetForm="ngForm">
+      <input
+        type="email"
+        name="resetEmail"
+        [(ngModel)]="FormData_of_mail.email"
+        placeholder="you@example.com"
+        required
+        autofocus
+      />
+      <button type="submit" [disabled]="!resetForm.form.valid" class="login-btn small">
+        Send Reset Link
+      </button>
+    </form>
+
+    <p class="small-note">
+      Or <a (click)="closeForgotModal()" class="link-like">go back to login</a>
+    </p>
+  </div>
+</div>
+    </form>
+
+    <p class="register-link">
+      Don’t have an account? <a routerLink="/register">Register here</a>
+    </p>
+  </div>
+</div>
+
+<div class="toast" [class.show]="showError">
+  {{ errorMessage }}
+</div>

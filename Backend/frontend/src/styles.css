@@ -1,0 +1,50 @@
+/* You can add global styles to this file, and also import other style files */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+body {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;   /* upar se start */
+  min-height: 100vh;
+  margin: 0;
+  padding: 40px 0;          /* upar aur niche thoda gap */
+  background: #f8f9fa;
+}
+
+.container {
+  max-width: 500px;
+  width: 100%;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  padding: 20px;
+}
+.success-toast {
+  position: fixed;
+  bottom: 30px;
+  left: -350px;
+  background-color: #28a745;
+  color: #fff;
+  padding: 15px 25px;
+  border-radius: 8px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+  transition: left 0.5s ease-in-out, opacity 0.4s ease-in-out;
+  z-index: 9999;
+  opacity: 0;
+}
+
+.success-toast.show {
+  left: 30px;
+  opacity: 1;
+}
+
+.success-toast i {
+  font-size: 1.2rem;
+}
