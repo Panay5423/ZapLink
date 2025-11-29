@@ -1,0 +1,122 @@
+<div class="split-container">
+  <div class="image-panel">
+    <div class="image-content">
+      <h2>ZapLink⚡</h2>
+      <p>Welcome to the platform. Please login to continue.</p>
+    </div>
+  </div>
+
+  <div class="form-panel">
+    <div class="login-card">
+      <h2>Welcome Back</h2>
+      <p>Please login to your account</p>
+
+      <form (ngSubmit)="login()">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            [(ngModel)]="formData.email"
+            name="email"
+            placeholder="Enter your email"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            [(ngModel)]="formData.password"
+            name="password"
+            placeholder="Enter your password"
+            required
+          />
+        </div>
+
+        <button type="submit" class="login-btn">Login</button>
+
+        <button
+          type="button"
+          class="forgot-btn"
+          (click)="forgotPassword()"
+        >
+          Forgot Password?
+        </button>
+      </form>
+
+      <p class="register-link">
+        Don’t have an account?
+        <a routerLink="/register">Register here</a>
+      </p>
+    </div>
+  </div>
+</div>
+
+
+<!-- 🔹 Forgot Password Modal -->
+<!-- 🔹 Forgot Password Modal -->
+<div class="fp2-overlay" *ngIf="showForgotModal" (click)="closeForgotModal()">
+  <div class="fp2-modal" (click)="$event.stopPropagation()">
+    <button class="fp2-close" (click)="closeForgotModal()">✕</button>
+
+    <h2 class="fp2-title">Forgot Password?</h2>
+    <p class="fp2-subtitle">
+      Enter your email address and we’ll send you a password reset link.
+    </p>
+
+    <form (ngSubmit)="sendResetLink()" #resetForm="ngForm" class="fp2-form">
+      <input
+        type="email"
+        name="resetEmail"
+        [(ngModel)]="FormData_of_mail.email"
+        placeholder="you@example.com"
+        required
+        autofocus
+        class="fp2-input"
+      />
+      <button
+        type="submit"
+        [disabled]="!resetForm.form.valid || isLoading"
+        class="fp2-btn"
+      >
+        {{ isLoading ? 'Sending...' : 'Send Reset Link' }}
+      </button>
+    </form>
+
+
+    <div *ngIf="isLoading" class="fp2-loader"></div>
+    <p *ngIf="isLoading" class="fp2-loading-text">Please wait...</p>
+
+   
+    <div *ngIf="mailSent" class="fp2-toast success">
+      <i class="bi bi-check-circle-fill"></i>
+      <span>Password reset link sent successfully!</span>
+    </div>
+
+   
+    <div *ngIf="show_errorMessage" class="fp2-toast error">
+      <i class="bi bi-x-circle-fill"></i>
+      <span>{{ show_errorMessage }}</span>
+    </div>
+
+    <p class="fp2-footer">
+      Remember your password?
+      <a (click)="closeForgotModal()" class="fp2-link">Go back to login</a>
+    </p>
+  </div>
+</div>
+
+<div class="toast-error" *ngIf="showError">
+  <i class="bi bi-exclamation-triangle-fill"></i>
+  {{ errorMessage }}
+</div>
+
+
+<div class="toast-success" *ngIf="showSuccess">
+  <i class="bi bi-check-circle-fill"></i>
+  {{ successMessage }}
+</div>
+

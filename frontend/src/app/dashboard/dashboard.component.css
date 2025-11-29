@@ -1,0 +1,31 @@
+.dashboard-container {
+  display: flex;
+  width: 100vw;
+  min-height: 100vh;
+  background: #f5f6fa;
+}
+
+app-sidebar {
+  width: 250px;
+  flex-shrink: 0;
+  position: fixed;
+  height: 100vh;
+  left: 0;
+  top: 0;
+}
+
+.main-content {
+  margin-left: 250px;
+  width: calc(100% - 250px);
+  height: auto !important;
+  min-height: auto !important;
+  overflow-y: auto;
+  background: #f9fafb;
+  padding: 30px;
+}
+
+.feed-area {
+  padding: 90px 2rem 2rem 2rem;
+  height: auto !important;
+  min-height: auto !important;
+}

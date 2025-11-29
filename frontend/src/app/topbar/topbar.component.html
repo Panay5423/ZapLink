@@ -1,0 +1,37 @@
+<header class="topbar">
+  <div class="search-wrapper">
+    <i class="bi bi-search"></i>
+    <input type="text" class="search-input" [(ngModel)]="searchQuery" (input)="onSearchChange()"
+      (focus)="showDropdown = true" (blur)="hideDropdown()">
+
+
+    <div class="search-results" *ngIf="showDropdown">
+      <div class="result-item" *ngFor="let u of searchResults" (mousedown)="goToProfile(u._id)">
+        <img [src]="'http://localhost:3000/uploads/' + u.profilePicture" alt="Profile Picture" />
+
+        <div class="result-info">
+          <p class="username">{{ u.username }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="right-actions">
+    <button class="add-post-btn" (click)="openModal()">
+      <i class="bi bi-plus-lg"></i> Add New Post
+    </button>
+
+    <div class="icons">
+      <i class="bi bi-bell"></i>
+      <i class="bi bi-chat-dots"></i>
+    </div>
+  </div>
+</header>
+
+<!-- 👇 Modal appears when openModal() triggers -->
+<div class="post-modal" *ngIf="showModal" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <app-new-post (close)="closeModal()"></app-new-post>
+  </div>
+</div>

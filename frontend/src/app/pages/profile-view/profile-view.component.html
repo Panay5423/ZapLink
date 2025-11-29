@@ -1,0 +1,76 @@
+<div class="profile-layout" *ngIf="userData">
+
+  <div class="profile-left">
+
+    <div class="banner-box">
+      <img [src]="'http://localhost:3000/uploads/' + userData.BannerPicture" alt="Banner"
+        onerror="this.src='assets/default-banner.jpg'">
+    </div>
+
+    <div class="profile-card">
+      <img class="profile-img" [src]="'http://localhost:3000/uploads/' + userData.profilePicture" alt="Profile"
+        onerror="this.src='assets/default-avatar.png'">
+
+      <h2 class="username">{{ userData.Uername }}</h2>
+      <p class="bio">{{ userData.bio }}</p>
+
+      <div class="stats">
+        <div>
+          <h3>{{ getCount(userData.follwer) }}</h3>
+          <span>Followers</span>
+        </div>
+        <div>
+          <h3>{{ getCount(userData.follwings) }}</h3>
+          <span>Following</span>
+        </div>
+
+      </div>
+      <button class="follow-btn" (click)="toggleFollow()">
+        {{ isFollowing ? 'Unfollow' : 'Follow' }}
+      </button>
+    </div>
+
+  </div>
+
+  <div class="profile-right">
+
+    <div class="private-view" *ngIf="userData.message === 'This account is private'; else publicPosts">
+      <div class="lock-circle">
+        <i class="fas fa-lock"></i>
+      </div>
+      <h2>Account is Private</h2>
+    </div>
+
+    <ng-template #publicPosts>
+      <h3 class="section-title">Posts ({{ getCount(userData.posts) }})</h3>
+
+      <div class="posts-grid" *ngIf="userData.posts?.length > 0; else noPosts">
+
+        <div class="post-card" *ngFor="let post of userData.posts">
+
+
+          <img [src]="'http://localhost:3000' + post.PostImage" class="post-img">
+
+          <div class="post-info">
+            <p class="caption">{{ post.Caption || 'No Caption' }}</p>
+
+            <div class="actions">
+              <span>❤️ {{ post.Likes || 0 }}</span>
+              <span>💬 {{ post.Comments?.length || 0 }}</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <ng-template #noPosts>
+        <div class="empty-state">
+          <p>No posts yet.</p>
+        </div>
+      </ng-template>
+    </ng-template>
+
+  </div>
+
+</div>

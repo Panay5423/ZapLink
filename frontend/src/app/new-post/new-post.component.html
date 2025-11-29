@@ -1,0 +1,59 @@
+<div class="create-post">
+  <h2>Create New Post</h2>
+
+  <!-- Image Upload -->
+  <input type="file" (change)="onFileSelect($event)" accept="image/*" />
+  <img *ngIf="imagePreview" [src]="imagePreview" class="preview" />
+
+  <!-- Caption -->
+  <textarea
+    [(ngModel)]="caption"
+    placeholder="Write a caption..."
+  ></textarea>
+
+  <!-- Song Picker -->
+  <div class="song-picker">
+    <h3>Select Song (Click ▶️ to listen)</h3>
+
+    <div class="song-grid">
+      <div
+        class="song-item"
+        *ngFor="let s of songsList"
+        [class.selected]="s.title === songTitle"
+      >
+        <img [src]="s.cover" alt="cover" />
+        <div class="info">
+          <p class="title">{{ s.title }}</p>
+          <p class="artist">{{ s.artist }}</p>
+        </div>
+
+        <div class="actions">
+          <button (click)="playSong(s)">
+            <i
+              class="bi"
+              [ngClass]="
+                currentlyPlaying === s.title ? 'bi-pause-fill' : 'bi-play-fill'
+              "
+            ></i>
+          </button>
+          <button (click)="selectSong(s)">Select</button>
+        </div>
+      </div>
+    </div>
+
+    <p *ngIf="songTitle" class="selected-song">
+      🎵 Selected: <strong>{{ songTitle }}</strong> — {{ songArtist }}
+    </p>
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="btn-group">
+    <button (click)="submitPost()">Post</button>
+    <button class="cancel" (click)="close.emit()">Cancel</button>
+  </div>
+</div>
+<!-- Loading Overlay -->
+<div class="zap-overlay" *ngIf="isUploading">
+  <div class="zap-loader-bar"></div>
+  <span>Uploading your post...</span>
+</div>

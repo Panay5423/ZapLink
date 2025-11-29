@@ -1,0 +1,94 @@
+<div class="page-container">
+
+  <aside class="profile-column">
+    <div class="profile-card">
+      
+      <div class="card-banner">
+        <div class="edit-icon" title="Edit Banner">✏️</div>
+      </div>
+
+      <div class="card-body">
+        <div class="avatar-wrapper">
+          <img [src]="'http://localhost:3000/uploads/' + user.profilePicture" 
+               alt="Profile" 
+               class="avatar-img"
+              >
+        </div>
+
+        <h2 class="user-name">{{ user.username }}</h2>
+        <p class="user-bio">{{ user.bio || 'Digital Enthusiast & Creator' }}</p>
+
+        <div class="stats-container">
+          <div class="stat-box">
+            <span class="stat-number">{{ user.followers || 0 }}</span>
+            <span class="stat-label">Followers</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-box">
+            <span class="stat-number">{{ user.following || 0 }}</span>
+            <span class="stat-label">Following</span>
+          </div>
+        </div>
+
+        <div class="info-section">
+          <div class="info-row">
+            <span class="info-icon">📧</span> {{ user.email }}
+          </div>
+          <div class="info-row">
+            <span class="info-icon">🆔</span> UID: {{ user.id }}
+          </div>
+        </div>
+
+        <button class="profile-btn">Edit Profile</button>
+      </div>
+    </div>
+  </aside>
+
+  <main class="feed-column">
+  <div class="feed-wrapper">
+
+  <!-- Skeleton -->
+<div *ngIf="isLoading" class="skeleton-wrap">
+
+  <div class="skeleton-post"></div>
+  <div class="skeleton-post"></div>
+  <div class="skeleton-footer"></div>
+
+
+</div>
+
+  <!-- Real posts (ONLY when loading done) -->
+  <div *ngIf="!isLoading">
+    <div class="post-card" *ngFor="let p of posts">
+      
+      <div class="post-header">
+        <img [src]="'http://localhost:3000/uploads/' + user.profilePicture" class="header-avatar">
+        <div class="header-text">
+          <h4>{{ user.username }}</h4>
+          <span>Suggested Post</span>
+        </div>
+        <button style="margin-left:auto; border:none; background:none; font-size:1.2rem;">⋮</button>
+      </div>
+
+      <div class="post-image-box">
+        <img [src]="'http://localhost:3000' + p.PostImage" class="main-post-img" loading="lazy">
+      </div>
+
+      <div class="post-actions">
+        <button class="action-btn">❤️ <span>{{ p.Likes || 0 }}</span></button>
+        <button class="action-btn">💬 <span>{{ p.Comments?.length || 0 }}</span></button>
+        <button class="action-btn" style="margin-left:auto">🚀</button>
+      </div>
+
+      <div class="post-content">
+        <strong>{{ user.username }}</strong> {{ p.Caption }}
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+  </main>
+
+</div>

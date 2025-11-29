@@ -1,0 +1,44 @@
+<div class="sidebar">
+  <div class="logo">
+
+    <h1>⚡ZapLink</h1>
+  </div>
+
+  <div class="search">
+    <i class="bi bi-search"></i>
+    <input type="text" placeholder="Search" />
+  </div>
+
+  <ul class="menu">
+    <li routerLink="feed" routerLinkActive="active">
+      <i class="bi bi-house-door"></i> Feed
+    </li>
+    <li routerLink="stories" routerLinkActive="active">
+      <i class="bi bi-collection-play"></i> Stories
+    </li>
+    <li routerLink="friends" routerLinkActive="active">
+      <i class="bi bi-people"></i> Friends
+    </li>
+    <li routerLink="settings" routerLinkActive="active">
+      <i class="bi bi-gear"></i> Settings
+    </li>
+  </ul>
+
+  <div class="bottom">
+    <button class="pro-btn">Go Pro</button>
+
+
+    <div class="profile" routerLinkActive="active-profile" [routerLinkActiveOptions]="{ exact: false }"
+      [routerLink]="['/dashboard/user-profile']">
+      <img [src]="'http://localhost:3000/uploads/' + user.profilePicture" alt="Profile Picture" />
+
+
+      <li routerLink="user-profile" routerLinkActive="active">
+
+        <div>
+          <h4>{{ user.username }}</h4>
+          <p>UID {{ user.id }}</p>
+        </div>
+      </li>
+
+    </div>
