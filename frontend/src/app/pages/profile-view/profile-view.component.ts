@@ -16,11 +16,12 @@ export class ProfileViewComponent implements OnInit {
   isLoading: boolean = true;
 
   constructor(private route: ActivatedRoute, private ProjectService: ProjectService) {
-    this.viwerId = this.route.snapshot.paramMap.get('id');
+
   }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
+      this.viwerId = this.route.snapshot.paramMap.get('id');
 
 
       if (this.viwerId) {
@@ -28,9 +29,9 @@ export class ProfileViewComponent implements OnInit {
         this.ProjectService.ViewUser(this.viwerId).subscribe(
           (response: any) => {
             console.log('User Profile Data:', response);
-
-
             this.userData = response;
+            this.isFollowing = response.isFollowing ;
+            
             console.log("Posts", this.userData?.posts);
             console.log("posts", this.userData?.posts.PostImage);
             this.isLoading = false;
@@ -55,21 +56,18 @@ export class ProfileViewComponent implements OnInit {
   isFollowing: boolean = false;
 
   toggleFollow() {
- 
+    if (!this.userData?._id) return;
+    this.isFollowing = true
 
-    if (this.viwerId) {
-      this.userData_id = this.userData._id;
-
-      this.ProjectService.followUser(this.userData_id).subscribe(
-        (response: any) => {
-          console.log('Follow/Unfollow response:', response);
-          this.isFollowing = !this.isFollowing;
-        },
-        (error: any) => {
-          console.error('Error following/unfollowing user:', error);
-        }
-      );
-    }
-
+    this.ProjectService.followUser(this.userData._id).subscribe(
+      (response: any) => {
+        console.log('Follow/Unfollow response:', response);
+          window.location.reload();
+      },
+      (error: any) => {
+        console.error('Error following/unfollowing user:', error);
+      }
+    );
   }
+
 }

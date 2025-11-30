@@ -1,92 +1,75 @@
-const userModel = require('../Models/user.model')
-const postModel = require('../Models/post.model')
+const userModel = require('../Models/user.model');
+const postModel = require('../Models/post.model');
+
 exports.view_user = async (req, res) => {
-
     try {
+        const profileUserId = req.params.id;
+        const viewerId = req.user.id;
 
-        const _id = req.params.id;
-        const viwerId = req.user.id;
+        if (!profileUserId) {
+            return res.status(400).json({ message: "No user ID provided" });
+        }
 
-        console.log("query", _id);
-        if (!_id) {
-            return res.status(400).json({
-                message: "No query provided"
-            })
-        }
-        if (!viwerId) {
-            return res.status(400).json({
-                message: "something went wrong"
-            })
-        }
-        const result = await userModel.findOne({ _id })
+        const profileUser = await userModel.findById(profileUserId)
             .select("IsPrivate username profilePicture _id BannerPicture followers following bio");
 
-        const followers = result.followers || [];
-
-        const isFollower = followers.includes(viwerId);
-
-
-        console.log("result", result);
-        console.log(result.IsPrivate);
-
-        if (result.IsPrivate == true) {
-
-            const Sizeof_followers = result.followers || [];
-            const sizeOf_Follwing = result.following || [];
-            const posts = await postModel.find({ Posted_by: _id, IsDeleted: false })
-            const number_of_posts = posts.length;
-
-            return res.json(
-                {
-                    Uername: result.username,
-                    profilePicture: result.profilePicture,
-                    _id: result._id,
-                    BannerPicture: result.BannerPicture,
-                    follwer: Sizeof_followers.length,
-                    follwings: sizeOf_Follwing.length,
-                    bio: result.bio,
-                    posts: number_of_posts.length,
-                    message: "This account is private"
-                });
-        }
-        if (result.IsPrivate == false) {
-            const posts = await postModel.find({ Posted_by: _id, IsDeleted: false })
-
-            return res.json(
-                {
-                    Uername: result.username,
-                    profilePicture: result.profilePicture,
-                    _id: result._id,
-                    BannerPicture: result.BannerPicture,
-                    follwer: result.followers,
-                    follwings: result.following,
-                    bio: result.bio,
-                    posts: posts
-
-                });
-        }
-        if (result.IsPrivate == true && isFollower) {
-            const posts = await postModel.find({ Posted_by: _id, IsDeleted: false })
-            const number_of_posts = posts.length;
-
-            console.log(res)
-            return res.json(
-                {
-                    Uername: result.username,
-                    profilePicture: result.profilePicture,
-                    _id: result._id,
-                    BannerPicture: result.BannerPicture,
-                    follwer: result.followers,
-                    follwings: result.following,
-                    bio: result.bio,
-                    posts: number_of_posts.length
-
-                });
+        if (!profileUser) {
+            return res.status(404).json({ message: "User not found" });
         }
 
-    }
-    catch (err) {
+
+        const isFollowing = profileUser.followers.includes(viewerId);
+
+
+        const posts = await postModel.find({ Posted_by: profileUserId, IsDeleted: false });
+        console.log("account kesa hai ? ", profileUser.IsPrivate);
+        console.log("kya follow kar raha hai ? ", isFollowing);
+
+
+        if (!profileUser.IsPrivate) {
+            return res.json({
+                username: profileUser.username,
+                profilePicture: profileUser.profilePicture,
+                _id: profileUser._id,
+                BannerPicture: profileUser.BannerPicture,
+                followers: profileUser.followers,
+                followings: profileUser.following,
+                bio: profileUser.bio,
+                posts: posts,
+                isFollowing: isFollowing
+            });
+        }
+
+        if (profileUser.IsPrivate && isFollowing) {
+            return res.json({
+                username: profileUser.username,
+                profilePicture: profileUser.profilePicture,
+                _id: profileUser._id,
+                BannerPicture: profileUser.BannerPicture,
+                followers: profileUser.followers,
+                followings: profileUser.following,
+                bio: profileUser.bio,
+                posts: posts,
+                isFollowing: isFollowing,
+                message: "This account is private and you are following"
+            });
+        }
+
+        return res.json({
+            username: profileUser.username,
+            profilePicture: profileUser.profilePicture,
+            _id: profileUser._id,
+            BannerPicture: profileUser.BannerPicture,
+            followers: profileUser.followers.length,
+            followings: profileUser.following.length,
+            bio: profileUser.bio,
+            posts: posts.length,
+            isFollowing: isFollowing,
+            message: "This account is private"
+        });
+
+    } catch (err) {
         console.log(err);
-        res.status(500).json({ message: "server error" })
+        res.status(500).json({ message: "server error" });
     }
 };
