@@ -28,7 +28,9 @@ const UserDataSchema = new mongoose.Schema({
 
     profilePicture: { type: String, default: "defaultprofile.png" },
     BannerPicture: { type: String, default: "_banner-default.jpg" },
-    resetToken: { type: String, },
+    resetPasswordToken: String,
+    resetPasswordExpires: { type: Date },
+    passwordChangedAt: { type: Date },
     IsPrivate: { type: Boolean, default: false }
 
 });

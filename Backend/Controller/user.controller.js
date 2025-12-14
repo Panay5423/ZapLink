@@ -22,7 +22,7 @@ exports.RegisterUser = async (req, res) => {
   try {
     const { username, email, password, firstName, lastName, gender, bio, date } = req.body;
 
-    
+
     if (!validator.isEmail(email)) {
       return res.status(400).json({
         success: false,
@@ -60,7 +60,7 @@ exports.RegisterUser = async (req, res) => {
 
     await newUser.save();
 
-    
+
     try {
       await transporter.sendMail({
         from: `"Verification" <${process.env.EMAIL_USER}>`,
@@ -185,21 +185,21 @@ exports.loginUser = async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
-return res.json({
-  success: true,
-  message: "Login successful",
-  token,
-  user: {
-    id: user._id,
-    username: user.username,
-    email: user.email,
-    profilePicture: user.profilePicture, 
-    bannerPicture: user.BannerPicture,   
-    bio: user.bio,
-    followers: user.follwer,          
-    following: user.follwings
-  },
-});
+    return res.json({
+      success: true,
+      message: "Login successful",
+      token,
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        profilePicture: user.profilePicture,
+        bannerPicture: user.BannerPicture,
+        bio: user.bio,
+        followers: user.follwer,
+        following: user.follwings
+      },
+    });
 
   } catch (error) {
     console.error("Login Error:", error);
@@ -237,7 +237,7 @@ exports.customize = async (req, res) => {
 
 
 }
-exports.verifyToken = async (req, res) =>{
-  const userID = req.user.id; 
+exports.verifyToken = async (req, res) => {
+  const userID = req.user.id;
   res.status(200).json({ success: true, message: "Token is valid", userID });
 }

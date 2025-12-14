@@ -12,14 +12,14 @@ module.exports = function (req, res, next) {
   }
 
   try {
-   
+
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
-    next(); 
+    next();
   } catch (err) {
     console.log("JWT Error:", err.name);
 
-  
+
     if (err.name === 'TokenExpiredError') {
       return res.status(401).json({
         success: false,
@@ -34,10 +34,11 @@ module.exports = function (req, res, next) {
       });
     }
 
-   
+
     return res.status(401).json({
       success: false,
       message: 'Authentication failed. Please login again.',
     });
   }
+
 };
