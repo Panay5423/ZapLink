@@ -21,6 +21,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { ProfileViewComponent } from './pages/profile-view/profile-view.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,7 +45,7 @@ import { ProfileViewComponent } from './pages/profile-view/profile-view.componen
     CommonModule,
     FormsModule,  
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
