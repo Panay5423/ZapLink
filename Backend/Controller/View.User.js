@@ -1,5 +1,7 @@
 const userModel = require('../Models/user.model');
 const postModel = require('../Models/post.model');
+const FollowRequest = require('../Models/FollowRequest');
+
 
 exports.view_user = async (req, res) => {
     try {
@@ -19,6 +21,18 @@ exports.view_user = async (req, res) => {
 
 
         const isFollowing = profileUser.followers.includes(viewerId);
+
+        let followStatus = "FOLLOW";
+
+        const pendingRequest = await FollowRequest.findOne({
+            from: viewerId,
+            to: profileUserId,
+            status: "pending"
+        });
+
+        if (pendingRequest) {
+            followStatus = "REQUESTED";
+        }
 
 
         const posts = await postModel.find({ Posted_by: profileUserId, IsDeleted: false });
@@ -64,7 +78,7 @@ exports.view_user = async (req, res) => {
             followings: profileUser.following.length,
             bio: profileUser.bio,
             posts: posts.length,
-            isFollowing: isFollowing,
+            followStatus: followStatus,
             message: "This account is private"
         });
 

@@ -1,4 +1,5 @@
 const userModel = require('../Models/user.model');
+const FollowRequest = require('../Models/FollowRequest')
 
 exports.followUser = async (req, res) => {
     try {
@@ -18,6 +19,33 @@ exports.followUser = async (req, res) => {
 
         if (!targetUser || !currentUser) {
             return res.status(404).json({ message: "User not found" });
+        }
+        console.log("targetUser.IsPrivate", targetUser.IsPrivate)
+
+       
+        const pendingRequest = await FollowRequest.findOne({
+            from: currentUser._id,
+            to: targetUser._id,
+            status: "pending",
+        });
+
+        if (pendingRequest) {
+            return res.status(200).json({
+                followStatus: "REQUESTED",
+            });
+        }
+
+       
+        if (targetUser.IsPrivate === true) {
+            await FollowRequest.create({
+                from: currentUser._id,
+                to: targetUser._id,
+                status: "pending",
+            });
+
+            return res.status(200).json({
+                followStatus: "REQUESTED",
+            });
         }
 
 
@@ -41,6 +69,7 @@ exports.followUser = async (req, res) => {
 
             await currentUser.save();
             await targetUser.save();
+            console.log("ye yahan tk chal gya ")
 
             return res.status(200).json({ message: "Followed successfully" });
         }

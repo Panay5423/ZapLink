@@ -26,7 +26,12 @@
 
       </div>
       <button class="follow-btn" (click)="toggleFollow()">
-        {{ isFollowing ? 'Unfollow' : 'Follow' }}
+        {{ followStatus === 'FOLLOWING' ? 'Following' :
+        followStatus === 'REQUESTED' ? 'Requested' :
+        'Follow'
+         }}
+         
+        
       </button>
     </div>
 
@@ -38,10 +43,11 @@
       <div class="lock-circle">
         <i class="fas fa-lock"></i>
       </div>
-     <div class="private-account-msg" >
-     <i class="fas fa-lock"></i> <p>Account is Private</p>
-     <span style="font-size: 0.9rem; font-weight: normal;">Follow this account to see their photos and videos.</span>
-  </div>
+      <div class="private-account-msg">
+        <i class="fas fa-lock"></i>
+        <p>Account is Private</p>
+        <span style="font-size: 0.9rem; font-weight: normal;">Follow this account to see their photos and videos.</span>
+      </div>
     </div>
 
     <ng-template #publicPosts>

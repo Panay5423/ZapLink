@@ -3,12 +3,9 @@ const connectDB = require('./config/db')
 const app = require("./app");
 const http = require('http');
 
-const SetUpSoket = require('./WebSoket/soket')
+const SetUpSoket = require('./WebSoket/socket')
 
 const server = http.createServer(app);
-
-
-
 
 SetUpSoket(server)
 
