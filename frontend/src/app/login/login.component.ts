@@ -15,22 +15,22 @@ export class LoginComponent {
     email: '',
     password: '',
   };
-  
+
   showError: boolean = false;
   errorMessage: string = '';
   showSuccess: boolean = false;
   successMessage: string = '';
-   showForgotModal = false;
-   FormData_of_mail: resetEmail=
-   {
+  showForgotModal = false;
+  FormData_of_mail: resetEmail =
+    {
       email: ''
-   }
-isLoading = false;
-mailSent = false;
-show_errorMessage = '';
+    }
+  isLoading = false;
+  mailSent = false;
+  show_errorMessage = '';
 
 
- 
+
 
   constructor(private authService: AuthServisec, private router: Router) { }
 
@@ -61,46 +61,51 @@ show_errorMessage = '';
           this.showErrorNotification(error.error.message);
         } else if (error.status === 404) {
           this.showErrorNotification('Wrong email or password!');
-        } else {
+        }
+        else if (error.status === 500)
+        {
+          this.showErrorNotification('error 500');
+        }
+         else {
           this.showErrorNotification('Something went wrong! Try again.');
         }
       }
     );
-  } 
-    forgotPassword(){
-     this.showForgotModal=true
-    }
-    closeForgotModal(){
-           this.showForgotModal=false
-    }
-sendResetLink() {
-  this.isLoading = true; 
-  this.mailSent = false;
-  this.show_errorMessage = '';
+  }
+  forgotPassword() {
+    this.showForgotModal = true
+  }
+  closeForgotModal() {
+    this.showForgotModal = false
+  }
+  sendResetLink() {
+    this.isLoading = true;
+    this.mailSent = false;
+    this.show_errorMessage = '';
 
-  console.log('Reset Data:', this.formData, this.FormData_of_mail);
+    console.log('Reset Data:', this.formData, this.FormData_of_mail);
 
-  this.authService.reset_pass(this.FormData_of_mail).subscribe({
-    next: (response: any) => {
-      console.log('Response:', response);
-      this.isLoading = false; 
+    this.authService.reset_pass(this.FormData_of_mail).subscribe({
+      next: (response: any) => {
+        console.log('Response:', response);
+        this.isLoading = false;
 
-      if (response.success) {
-        this.mailSent = true;
-        this.show_errorMessage = '';
-       console.log('Mail sent successfullllllllllllly');
-       
-      } else {
-        this.show_errorMessage = 'Failed to send reset link. Please try again.';
+        if (response.success) {
+          this.mailSent = true;
+          this.show_errorMessage = '';
+          console.log('Mail sent successfuly');
+
+        } else {
+          this.show_errorMessage = 'Failed to send reset link. Please try again.';
+        }
+      },
+      error: (error: any) => {
+        console.error('Error:', error);
+        this.isLoading = false;
+        this.show_errorMessage = 'Something went wrong. Try again later.';
       }
-    },
-    error: (error: any) => {
-      console.error('Error:', error);
-      this.isLoading = false;
-      this.show_errorMessage = 'Something went wrong. Try again later.';
-    }
-  });
-}
+    });
+  }
 
   showErrorNotification(message: string) {
     this.errorMessage = message;
@@ -114,5 +119,5 @@ sendResetLink() {
     setTimeout(() => (this.showSuccess = false), 2000);
   }
 
- 
+
 }

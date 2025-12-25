@@ -62,12 +62,22 @@ export class ProfileViewComponent implements OnInit {
     this.ProjectService.followUser(this.userData._id).subscribe(
       (response: any) => {
         console.log('Follow/Unfollow response:', response);
-          window.location.reload();
+         this.reloadProfile();
+
       },
       (error: any) => {
         console.error('Error following/unfollowing user:', error);
       }
     );
   }
+  reloadProfile() {
+  if (!this.viwerId) return;
+
+  this.ProjectService.ViewUser(this.viwerId).subscribe((res:any) => {
+    this.userData = res;
+    this.isFollowing = res.isFollowing;
+  });
+}
+
 
 }

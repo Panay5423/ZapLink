@@ -7,26 +7,22 @@ export interface User {
   password: string;
   date: string;
   gender: string;
-
-
-
-
 }
 
-export interface code{
+export interface code {
   length: number;
-  code:string;
+  code: string;
   email: string;
 }
 
-export interface login{
-  email:string;
-  password:string;
+export interface login {
+  email: string;
+  password: string;
 }
-export interface Token_password{
-  token:string;
-  NewPassword:string;
+export interface Token_password {
+  token: string;
+  NewPassword: string;
 }
-export interface resetEmail{
-  email:string;
+export interface resetEmail {
+  email: string;
 }
