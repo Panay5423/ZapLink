@@ -3,11 +3,11 @@ const connectDB = require('./config/db')
 const app = require("./app");
 const http = require('http');
 
-const SetUpSoket = require('./WebSoket/socket')
+const {SetUpSoket, setupSocket} = require('./WebSoket/socket')
 
 const server = http.createServer(app);
 
-SetUpSoket(server)
+setupSocket(server)
 
 connectDB().then(() => {
   const PORT = 3000;

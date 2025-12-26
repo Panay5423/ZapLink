@@ -23,8 +23,36 @@
     </button>
 
     <div class="icons">
-      <i class="bi bi-bell"></i>
+
       <i class="bi bi-chat-dots"></i>
+      <div class="icons">
+  <i class="bi bi-bell" (click)="toggleNotifications()"></i>
+
+  <div class="notification-panel" *ngIf="showNotifications">
+    <div class="notif-arrow"></div>
+
+    <div class="notif-header">
+      Notifications
+    </div>
+
+    <div class="notif-list">
+      <div class="notif-item">
+        <div class="dot"></div>
+        <div>
+          <strong>John</strong> sent you a follow request
+        </div>
+      </div>
+
+      <div class="notif-item">
+        <div class="dot"></div>
+        <div>
+          <strong>Alice</strong> accepted your request
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
     </div>
   </div>
 </header>

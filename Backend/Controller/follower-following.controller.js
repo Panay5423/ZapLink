@@ -1,5 +1,6 @@
 const userModel = require('../Models/user.model');
 const FollowRequest = require('../Models/FollowRequest')
+const SendNotification = require('../WebSoket/notification.socket')
 
 exports.followUser = async (req, res) => {
     try {
@@ -22,7 +23,7 @@ exports.followUser = async (req, res) => {
         }
         console.log("targetUser.IsPrivate", targetUser.IsPrivate)
 
-       
+
         const pendingRequest = await FollowRequest.findOne({
             from: currentUser._id,
             to: targetUser._id,
@@ -35,20 +36,21 @@ exports.followUser = async (req, res) => {
             });
         }
 
-       
         if (targetUser.IsPrivate === true) {
-            await FollowRequest.create({
+            await 
+            SendNotification(targetUser._id)
+            FollowRequest.create({
                 from: currentUser._id,
                 to: targetUser._id,
                 status: "pending",
             });
 
+
             return res.status(200).json({
                 followStatus: "REQUESTED",
             });
+
         }
-
-
         const alreadyFollowing = currentUser.following.includes(targetUserId);
 
 

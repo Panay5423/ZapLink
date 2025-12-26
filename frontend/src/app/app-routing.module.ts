@@ -17,10 +17,10 @@ import { ProfileViewComponent } from './pages/profile-view/profile-view.componen
  const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
-  { path: '', redirectTo: '/blank', pathMatch: 'full' },
-  {
-    path: 'reset-password/:token', component:ResetPassworComponent
-  },
+
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+
+  { path: 'reset-password/:token', component: ResetPassworComponent },
 
   {
     path: 'dashboard',
@@ -31,11 +31,10 @@ import { ProfileViewComponent } from './pages/profile-view/profile-view.componen
       { path: 'stories', component: StoriesComponent },
       { path: 'friends', component: FriendsComponent },
       { path: 'settings', component: SettingsComponent },
-      {path: 'user-profile' , component:ProfileComponent},
-      {path: 'profile/:id', component:ProfileViewComponent},
+      { path: 'user-profile', component: ProfileComponent },
+      { path: 'profile/:id', component: ProfileViewComponent },
     ],
   },
- 
 ];
 
 @NgModule({

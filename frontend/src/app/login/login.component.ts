@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AuthServisec } from '../services/auth.services';
 import { login } from '../Model/usermodel';
 import { resetEmail } from '../Model/usermodel';
+import { Soket } from '../services/socket.service'
 
 @Component({
   selector: 'app-login',
@@ -32,7 +33,7 @@ export class LoginComponent {
 
 
 
-  constructor(private authService: AuthServisec, private router: Router) { }
+  constructor(private authService: AuthServisec, private router: Router, private WebSoket: Soket) { }
 
   login() {
     this.authService.login(this.formData).subscribe(
@@ -43,6 +44,9 @@ export class LoginComponent {
 
           localStorage.setItem('token', response.token);
           localStorage.setItem('user', JSON.stringify(response.user));
+          const user = JSON.parse(localStorage.getItem('user')!)
+          console.log(user.id)
+          this.WebSoket.connect(user.id)
 
 
           this.showSuccessNotification(' Login Successful! Redirecting...');
