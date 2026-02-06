@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthServisec } from '../services/auth.services';
 import { RouterOutlet } from '@angular/router';
-import{ Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-topbar',
@@ -9,19 +9,24 @@ import{ Router } from '@angular/router';
   templateUrl: './topbar.component.html',
   styleUrl: './topbar.component.css'
 })
-export class TopbarComponent {    
+export class TopbarComponent {
   notifications = 3;
-   showModal = false;
-      searchQuery = '';
+  showModal = false;
+  searchQuery = '';
   searchResults: any[] = [];
   showDropdown = false;
 
 
-    user: any = JSON.parse(localStorage.getItem('user') || '{}');
+  user: any = JSON.parse(localStorage.getItem('user') || '{}');
+  showNotifications = false;
 
-    constructor(  private authService: AuthServisec , private router: Router) {}
+  constructor(private authService: AuthServisec, private router: Router) { }
 
-    
+  toggleNotifications() {
+    this.showNotifications = !this.showNotifications;
+  }
+
+
   onSearchChange() {
     const query = this.searchQuery.trim();
     if (!query) {
@@ -29,7 +34,7 @@ export class TopbarComponent {
       this.showDropdown = false;
       return;
     }
-   
+
     this.authService.search(query).subscribe({
       next: (res: any) => {
         console.log('Search results:', res);
@@ -49,14 +54,14 @@ export class TopbarComponent {
     this.showModal = false;
   }
   goToProfile(userId: string) {
-    
-this.router.navigate(['/dashboard/profile', userId]);
-console.log('Navigating to profile of user ID:', userId);
+
+    this.router.navigate(['/dashboard/profile', userId]);
+    console.log('Navigating to profile of user ID:', userId);
   }
   hideDropdown() {
-  setTimeout(() => {
-    this.showDropdown = false;
-  }, 200);
-}
+    setTimeout(() => {
+      this.showDropdown = false;
+    }, 200);
+  }
 
 }

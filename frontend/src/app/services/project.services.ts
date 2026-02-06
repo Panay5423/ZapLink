@@ -10,17 +10,18 @@ export class ProjectService {
   constructor(private http: HttpClient) { }
 
   private apiURL_ViewUserProfile = 'http://localhost:3000/action/view_user';
-  private apiURL_FollowUser  = " http://localhost:3000/action/follower_following";
-;
-                                                            
+  private apiURL_FollowUser = " http://localhost:3000/action/follower_following";
+  private apiURL_GetNotification = " http://localhost:3000/action/notification"
+    ;
+
   ViewUser(_id: string) {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${localStorage.getItem('token')}`
     });
 
     console.log("geting user profile of :", _id);
-     console.log("api url :", `${this.apiURL_ViewUserProfile}/${_id}`);
-    
+    console.log("api url :", `${this.apiURL_ViewUserProfile}/${_id}`);
+
     return this.http.get<any>(`${this.apiURL_ViewUserProfile}/${_id}`, { headers });
   }
   followUser(_id: string) {
@@ -31,4 +32,11 @@ export class ProjectService {
     return this.http.post<any>(`${this.apiURL_FollowUser}/${_id}`, {}, { headers });
   }
 
+  getNotification() {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${localStorage.getItem('token')}`
+    });
+
+    return this.http.get<any>(this.apiURL_GetNotification, { headers })
+  }
 }

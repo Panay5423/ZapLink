@@ -12,10 +12,9 @@
 
 
 .profile-left {
-  position: sticky; 
-  top: 0;
+
   height: 100%;
-  overflow-y: auto; 
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -31,6 +30,7 @@
   background: #e3e6ea;
   box-shadow: 0 4px 14px rgba(0,0,0,0.08);
   flex-shrink: 0; /* Shrink na hone de */
+   min-height: 180px;
 }
 .banner-box img {
   width: 100%;
@@ -49,6 +49,8 @@
   box-shadow: 0 6px 20px rgba(0,0,0,0.10);
   text-align: center;
   border: 1px solid rgba(255, 255, 255, 0.4);
+    min-height: 260px; /* prevent height jump */
+  transition: all 0.25s ease;
 }
 
 /* Profile picture */
@@ -61,6 +63,8 @@
   box-shadow: 0 6px 20px rgba(0,0,0,0.15);
   margin-top: -70px;
   background: #fff;
+   aspect-ratio: 1 / 1; /* square placeholder ensures no jump */
+  background: #ddd;    /* placeholder */
 }
 
 /* Name + Bio */
@@ -108,6 +112,9 @@
   overflow-y: auto; /* Scroll sirf right side pe */
   padding-right: 10px;
   padding-bottom: 50px;
+  scrollbar-gutter: stable; 
+  display: flex;             /* Flexbox on kar */
+  flex-direction: column;
 }
 
 /* Scrollbar styling for right panel */
@@ -134,6 +141,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* Responsive Grid */
   gap: 20px;
+  min-height: 250px; 
 }
 .post-card {
   background: #fff;
@@ -191,4 +199,36 @@
   background-color: #2563eb;
   color: white;
   transition: background-color 0.3s ease;
+  width: 120px;   /* fixed width */
+  text-align: center;
+}
+* {
+  transition: all 0.25s ease;
+}
+.follow-btn:hover {
+  background-color: #1e40af;
+}
+.private-account-msg {
+  flex-grow: 1;              /* Baki bacha hua pura space le lega */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  margin-bottom: 20px;
+  min-height: 300px;         /* Ek minimum height taaki chhota na lage */
+  text-align: center;
+  color: #666;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border: 1px dashed #ccc;   /* Thoda styling taaki alag dikhe */
+}
+
+/* Optional: Agar koi icon add karna ho private msg ke sath */
+.private-account-msg i {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  color: #888;
 }

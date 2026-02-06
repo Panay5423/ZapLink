@@ -14,6 +14,8 @@ export class ProfileViewComponent implements OnInit {
   userData: any = null;
   userData_id: string = '';
   isLoading: boolean = true;
+  followStatus: 'FOLLOW' | 'FOLLOWING' | 'REQUESTED' = 'FOLLOW';
+
 
   constructor(private route: ActivatedRoute, private ProjectService: ProjectService) {
 
@@ -30,8 +32,8 @@ export class ProfileViewComponent implements OnInit {
           (response: any) => {
             console.log('User Profile Data:', response);
             this.userData = response;
-            this.isFollowing = response.isFollowing ;
-            
+           this.followStatus = response.followStatus;
+
             console.log("Posts", this.userData?.posts);
             console.log("posts", this.userData?.posts.PostImage);
             this.isLoading = false;
@@ -57,17 +59,38 @@ export class ProfileViewComponent implements OnInit {
 
   toggleFollow() {
     if (!this.userData?._id) return;
-    this.isFollowing = true
-
     this.ProjectService.followUser(this.userData._id).subscribe(
       (response: any) => {
-        console.log('Follow/Unfollow response:', response);
-          window.location.reload();
+        console.log("backend se aaya hun res",response)
+        if (response.status === "REQUESTED") {
+          this.followStatus = "REQUESTED";
+        } 
+        
+        else if (response.followStatus === "REQUESTED") {
+          this.followStatus = "REQUESTED";
+        }
+        else if (response.message === "Followed successfully") {
+          this.followStatus = "FOLLOWING";
+        } else {
+          this.followStatus = "FOLLOW";
+        }
+        this.reloadProfile();
+
       },
       (error: any) => {
         console.error('Error following/unfollowing user:', error);
       }
     );
   }
+  reloadProfile() {
+    if (!this.viwerId) return;
+
+    this.ProjectService.ViewUser(this.viwerId).subscribe((res: any) => {
+      this.userData = res;
+      console.log(res.message)
+      this.isFollowing = res.isFollowing;
+    });
+  }
+
 
 }
