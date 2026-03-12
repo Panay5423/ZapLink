@@ -1,0 +1,52 @@
+/* Sidebar – only size & position */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 200px;
+    z-index: 20;
+    border-right: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 2px 0 6px rgba(0, 0, 0, 0.06);
+
+    transition: width 0.25s ease;
+}
+
+/* Collapse = ONLY width change */
+.app-shell.collapsed .sidebar {
+    width: 72px;
+}
+
+/* App shell */
+.app-shell {
+    display: flex;
+}
+
+/* Right side content */
+.app-right {
+    margin-left: 200px;
+    /* sidebar width */
+    width: calc(100% - 200px);
+    display: flex;
+    flex-direction: column;
+}
+
+/* When collapsed */
+.app-shell.collapsed .app-right {
+    margin-left: 72px;
+    width: calc(100% - 72px);
+}
+
+/* Topbar */
+.topbar {
+    position: sticky;
+    top: 0;
+    height: 70px;
+    z-index: 10;
+}
+
+/* Main content */
+.main {
+    padding: 24px;
+    min-height: calc(100vh - 70px);
+}

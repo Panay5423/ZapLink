@@ -1,0 +1,61 @@
+<div class="sidebar" [class.collapsed]="collapsed">
+
+    <div class="sidebar-header">
+        <div class="logo">
+            <h1>ZapLink</h1>
+        </div>
+
+        <button class="collapse-btn" (click)="toggle()">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+        </button>
+    </div>
+
+    <ul class="nav-links">
+        <li>
+            <a href="#" class="active">
+                <i class='bx bxs-home-alt-2'></i>
+                <span class="link-text">Home</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class='bx bxs-user-account'></i>
+                <span class="link-text">Friends</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class='bx bx-group'></i>
+                <span class="link-text">Community</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class='bx bx-chat'></i>
+                <span class="link-text">Chats</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class='bx bx-message-dots'></i>
+                <span class="link-text">Settings</span>
+            </a>
+        </li>
+    </ul>
+
+    <div class="sidebar-footer">
+        <button class="logout-btn">
+            <i class='bx bx-log-out'></i>
+            <span class="link-text">Logout</span>
+        </button>
+        <div class="profile">
+            <img src="" alt="">
+            <span class="link-text">Pranay</span>
+        </div>
+    </div>
+</div>

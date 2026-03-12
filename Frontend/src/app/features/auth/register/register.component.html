@@ -1,0 +1,184 @@
+<div class="register-wrapper">
+
+    <div class="left">
+        <div class="bubbles">
+            <div class="bubble one"></div>
+            <div class="bubble two"></div>
+            <div class="bubble three"></div>
+            <div class="bubble four"></div>
+        </div>
+
+        <div class="left-content">
+            <h1>ZapLink ⚡</h1>
+            <p class="tagline">Connect. Collaborate. Create.</p>
+
+            <ul class="steps">
+                <li [class.active]="step === 1">
+                    <span class="step-num">01</span> Profile Setup
+                </li>
+                <li [class.active]="step === 2">
+                    <span class="step-num">02</span> Security & Bio
+                </li>
+                <li [class.active]="step === 3">
+                    <span class="step-num">03</span> Final Polish
+                </li>
+                <li [class.active]="step === 4">
+                    <span class="step-num">04</span> Verify Your Email
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="right">
+        <div class="bg-decoration"></div>
+
+        <form [formGroup]="registerForm" class="glass-form">
+
+            <div *ngIf="step === 1" class="step-container fade-in">
+                <div class="header-box">
+                    <h2>Let's Get Started </h2>
+                    <p>Enter your basic details to create an account.</p>
+                </div>
+
+                <div class="row">
+                    <div class="field half">
+                        <label>First Name</label>
+                        <input formControlName="firstName" placeholder="Aditya">
+                    </div>
+                    <div class="field half">
+                        <label>Last Name</label>
+                        <input formControlName="lastName" placeholder="Kumar">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label>Username</label>
+                    <input formControlName="username" placeholder="@aditya_dev">
+                </div>
+
+                <div class="field">
+                    <label>Email Address</label>
+                    <input formControlName="email" placeholder="aditya@example.com">
+                </div>
+
+                <button type="button" class="btn-primary" (click)="next()">Continue →</button>
+            </div>
+
+            <div *ngIf="step === 2" class="step-container fade-in">
+                <div class="header-box">
+                    <h2>Personal Info </h2>
+                    <p>Secure your account and tell us about you.</p>
+                </div>
+
+                <div class="field">
+                    <label>Password</label>
+                    <input type="password" formControlName="password" placeholder="••••••••">
+                </div>
+
+                <div class="field">
+                    <label>Bio</label>
+                    <textarea formControlName="bio" placeholder="I am a developer..."></textarea>
+                </div>
+
+                <div class="row">
+                    <div class="field half">
+                        <label>Date of Birth</label>
+                        <input formControlName="dob" type="date">
+                    </div>
+                    <div class="field half">
+                        <label>Phone</label>
+                        <input formControlName="phone" placeholder="9876543210">
+                    </div>
+                </div>
+
+                <div class="nav-buttons">
+                    <button type="button" class="btn-secondary" (click)="back()">Back</button>
+                    <button type="button" class="btn-primary" (click)="next()">Next Step</button>
+                </div>
+            </div>
+
+            <div *ngIf="step === 3" class="step-container fade-in">
+                <div class="header-box">
+                    <h2>Preferences ⚙️</h2>
+                    <p>Customize your experience.</p>
+                </div>
+
+                <div class="profile-upload">
+                    <div class="image-preview"
+                        [style.background-image]="profilePreview ? 'url(' + profilePreview + ')' : ''">
+                        <span *ngIf="!profilePreview">📷</span>
+                    </div>
+                    <label class="upload-btn">
+                        Upload Photo
+                        <input type="file" (change)="onFileSelect($event)" hidden>
+                    </label>
+                </div>
+
+                <label class="toggle-card">
+                    <div class="text">
+                        <span>Private Account</span>
+                        <small>Only followers can see your posts</small>
+                    </div>
+                    <input type="checkbox" formControlName="isPrivate">
+                    <span class="slider"></span>
+                </label>
+
+                <label class="terms">
+                    <input type="checkbox" formControlName="terms">
+                    <span>I agree to <a href="#">Terms & Conditions</a></span>
+                </label>
+
+                <div class="nav-buttons">
+                    <button type="button" class="btn-secondary" (click)="back()">Back</button>
+                    <button type="button" class="btn-primary" (click)="submit()">Create Account</button>
+                </div>
+            </div>
+
+            <div *ngIf="step === 4" class="step-container fade-in" [formGroup]="verifyform">
+
+                <div class="verify-card">
+                    <div class="verify-icon">📩</div>
+
+                    <h2>Verify Your Email</h2>
+                    <p>
+                        We’ve sent a 6-digit verification code to
+                        <strong>{{ verifyform.value.verificationemail }}</strong>
+                    </p>
+
+                    <input class="otp-input" maxlength="6" placeholder="Enter code"
+                        formControlName="verificationCode" />
+
+                    <button class="btn-primary full" (click)="verify()">
+                        Verify & Continue →
+                    </button>
+
+                    <span class="resend">
+                        Didn’t get the code? <a href="#">Resend</a>
+                    </span>
+                </div>
+
+            </div>
+
+            <!-- Verification Success -->
+            <div class="verify-success" *ngIf="showVerify">
+
+                <div class="checkmark">
+                    <svg viewBox="0 0 52 52">
+                        <circle cx="26" cy="26" r="25" fill="none" />
+                        <path fill="none" d="M14 27l7 7 17-17" />
+                    </svg>
+                </div>
+
+                <h3>Email Verified</h3>
+                <p>Your email has been successfully verified</p>
+
+                <div class="success-arrow" (click)="step = 5">
+                    <span>Continue</span>
+                    <div class="arrow">➜</div>
+                </div>
+
+            </div>
+
+        </form>
+    </div>
+</div>

@@ -1,0 +1,504 @@
+/* --- RESET & BASE --- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Outfit', sans-serif;
+}
+
+body {
+  height: 100vh;
+  overflow: hidden;
+  background: #f0f4f8;
+}
+
+/* --- LAYOUT --- */
+.login-wrapper {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+/* --- LEFT PANEL (Visuals) --- */
+.left-panel {
+  flex: 1.1;
+  background: black;
+  background-size: 400% 400%;
+  animation: gradientBG 12s ease infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  color: white;
+}
+
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.blob {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  backdrop-filter: blur(5px);
+  z-index: 1;
+}
+
+.b1 {
+  width: 300px;
+  height: 300px;
+  top: -50px;
+  left: -100px;
+  animation: float 6s ease-in-out infinite;
+}
+
+.b2 {
+  width: 400px;
+  height: 400px;
+  bottom: -100px;
+  right: -100px;
+  animation: float 8s ease-in-out infinite reverse;
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.brand-content {
+  z-index: 2;
+  text-align: center;
+
+  padding: 40px;
+
+}
+
+.brand-content h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.brand-content p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  font-weight: 300;
+}
+
+/* --- RIGHT PANEL (Form & Useful Content) --- */
+.right-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  /* Changed to column for footer */
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  position: relative;
+}
+
+/* Top Right Help Button */
+.help-btn {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #000000;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.help-btn:hover {
+  color: #4f46e5;
+}
+
+.help-icon {
+  background: #f1f5f9;
+  padding: 8px;
+  border-radius: 50%;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 440px;
+  padding: 40px;
+  animation: slideInFade 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* TABS (Email vs QR) */
+.login-tabs {
+  display: flex;
+  background: #f1f5f9;
+  padding: 5px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+}
+
+.tab {
+  flex: 1;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #64748b;
+  transition: 0.3s;
+}
+
+.tab.active {
+  background: rgb(0, 0, 0);
+  color: #ffffff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  font-weight: 600;
+}
+
+/* HEADER */
+.header {
+  margin-bottom: 25px;
+}
+
+.header h2 {
+  font-size: 1.8rem;
+  color: #1e293b;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.header p {
+  color: #64748b;
+  font-size: 0.95rem;
+}
+
+/* FORM STYLES */
+.input-wrapper {
+  position: relative;
+  margin-bottom: 25px;
+}
+
+.input-wrapper input {
+  width: 100%;
+  /* Left padding 50px kiya taaki text icon ke upar na likha jaye */
+  padding: 16px 16px 16px 50px;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 15px;
+  outline: none;
+  transition: all 0.3s ease;
+  background: #f8fafc;
+  color: #334155;
+}
+
+.input-wrapper .icon {
+  position: absolute;
+  left: 18px;
+  /* Left se thoda door */
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+  /* Placeholder jesa grey color */
+  font-size: 18px;
+  transition: 0.3s;
+  z-index: 10;
+  /* Z-INDEX IMPORTANT HAI: Taaki icon input ke upar dikhe */
+  pointer-events: none;
+  /* Click icon ke through input pe jaye */
+}
+
+.input-wrapper label {
+  position: absolute;
+  left: 50px;
+  /* Label ko bhi icon ke baad shuru kiya */
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+  font-size: 15px;
+  pointer-events: none;
+  transition: 0.3s ease;
+  background: transparent;
+}
+
+.input-wrapper input:focus,
+.input-wrapper input:not(:placeholder-shown) {
+  border-color: #4f46e5;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+}
+
+.input-wrapper input:focus+label,
+.input-wrapper input:not(:placeholder-shown)+label {
+  top: -10px;
+  left: 15px;
+  font-size: 12px;
+  background: white;
+  padding: 0 6px;
+  color: #4f46e5;
+  font-weight: 600;
+  border-radius: 4px;
+}
+
+.input-wrapper input:focus~.icon {
+  color: #4f46e5;
+}
+
+/* QR CODE SECTION (Hidden by default) */
+.qr-section {
+  display: none;
+  text-align: center;
+  padding: 20px 0;
+  animation: fadeUp 0.5s ease;
+}
+
+.qr-section.active {
+  display: block;
+}
+
+.qr-img {
+  width: 180px;
+  height: 180px;
+  border: 2px dashed #e2e8f0;
+  padding: 10px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.qr-instruction {
+  font-size: 14px;
+  color: #64748b;
+  margin-bottom: 20px;
+}
+
+.qr-instruction span {
+  color: #4f46e5;
+  font-weight: 600;
+}
+
+/* BUTTON */
+.login-btn {
+  width: 100%;
+  padding: 15px;
+  background: black;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s;
+  box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+}
+
+.login-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* FOOTER & EXTRAS */
+.divider {
+  margin: 25px 0;
+  text-align: center;
+  position: relative;
+}
+
+.divider::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  height: 1px;
+  background: #e2e8f0;
+}
+
+.divider span {
+  background: white;
+  padding: 0 15px;
+  color: #94a3b8;
+  font-size: 13px;
+  position: relative;
+}
+
+.footer-legal {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.footer-legal a {
+  color: #64748b;
+  text-decoration: none;
+  margin: 0 10px;
+  transition: 0.3s;
+}
+
+.footer-legal a:hover {
+  color: #4f46e5;
+}
+
+.security-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 25px;
+  font-size: 12px;
+  color: #22c55e;
+  font-weight: 500;
+  background: #f0fdf4;
+  padding: 8px;
+  border-radius: 20px;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@keyframes slideInFade {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 900px) {
+  .left-panel {
+    display: none;
+  }
+
+  .help-btn {
+    top: 20px;
+    right: 20px;
+  }
+}
+
+/* --- CLEAN RED TOAST --- */
+.custom-toast {
+  position: fixed;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10000;
+
+  /* Background: Very Light Red (Soft) */
+  background: #c54e4e;
+
+  /* Text Color: Dark Red */
+  color: #f8f8f8;
+
+  /* Border: Subtle Red */
+  border: 1px solid #000000;
+
+  /* Sizing & Spacing */
+  padding: 16px 30px;
+  border-radius: 12px;
+  min-width: 280px;
+  text-align: center;
+  /* Text center kar diya */
+
+  /* Smooth Shadow */
+  box-shadow:
+    0 4px 6px -1px rgba(220, 38, 38, 0.1),
+    0 2px 4px -1px rgba(220, 38, 38, 0.06);
+
+  /* SMOOTH ANIMATION (No Bounce) */
+  animation: smoothSlideIn 0.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+
+  overflow: hidden;
+  /* Timer bar ke liye */
+  font-family: 'Inter', sans-serif;
+}
+
+/* Message styling */
+.toast-msg {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+/* --- TIMER BAR (Bottom Line) --- */
+.progress-track {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: transparent;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #ffffff;
+  /* Bright Red */
+  width: 100%;
+  /* 3 Second ka timer */
+  animation: timer 3s linear forwards;
+}
+
+/* --- KEYFRAMES --- */
+
+/* Smooth Slide In (Makkhan jaisa) */
+@keyframes smoothSlideIn {
+  from {
+    top: -60px;
+    opacity: 0;
+    transform: translateX(-50%) scale(0.95);
+  }
+
+  to {
+    top: 30px;
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+}
+
+/* Timer shrinking */
+@keyframes timer {
+  from {
+    width: 100%;
+  }
+
+  to {
+    width: 0%;
+  }
+}

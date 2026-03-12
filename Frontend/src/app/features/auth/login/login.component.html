@@ -1,0 +1,88 @@
+<div class="login-wrapper">
+  <div class="left-panel">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="brand-content">
+      <h1>ZapLink ⚡</h1>
+      <p>Connect. Collaborate. Create.</p>
+    </div>
+  </div>
+
+  <div class="right-panel">
+
+    <a href="#" class="help-btn">
+      Need Help? <i class="fa-solid fa-circle-question help-icon"></i>
+    </a>
+
+    <div class="login-card">
+
+      <div class="login-tabs">
+        <div class="tab active" onclick="switchTab('email')">Email Login</div>
+        <div class="tab" onclick="switchTab('qr')">Scan Code</div>
+      </div>
+
+      <div id="email-form">
+        <div class="header">
+          <h2>Welcome Back</h2>
+          <p>Enter your details to access your dashboard.</p>
+        </div>
+
+        <form (ngSubmit)="submit()">
+          <div class="input-wrapper">
+            <i class="fa-regular fa-envelope icon"></i>
+            <input type="email" name="email" required [(ngModel)]="loginForm.email" />
+
+            <label>Email Address</label>
+          </div>
+
+          <div class="input-wrapper">
+            <i class="fa-solid fa-lock icon"></i>
+            <input type="password" name="password" [(ngModel)]="loginForm.password" required />
+            <label>Password</label>
+          </div>
+          <div style="display:flex; justify-content:space-between; margin-bottom:25px; font-size:13px;">
+            <label style="color:#64748b; cursor:pointer;"><input type="checkbox"> Remember me</label>
+            <a href="#" style="color:#4f46e5; text-decoration:none; font-weight:500;">Forgot Password?</a>
+          </div>
+
+          <button class="login-btn" type="submit">Sign In</button>
+        </form>
+
+        <div class="divider"><span>Or</span></div>
+
+        <div style="text-align: center; color: #64748b; font-size: 14px;">
+          New to ZapLink? <a href="auth/register" style="color:#4f46e5; text-decoration:none; font-weight:600;">Create
+            Account</a>
+        </div>
+      </div>
+
+      <div id="qr-form" class="qr-section">
+        <div class="header">
+          <h2>Scan to Login</h2>
+          <p>Open the <strong>ZapLink App</strong> on your phone.</p>
+        </div>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=ZapLinkLogin" class="qr-img"
+          alt="QR Code">
+        <p class="qr-instruction">Point your camera at the code to log in instantly.</p>
+        <div class="security-badge">
+          <i class="fa-solid fa-shield-halved"></i> End-to-End Encrypted
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer-legal">
+      <a href="#">Privacy Policy</a> • <a href="#">Terms of Service</a> • <a href="#">System Status</a>
+      <div style="margin-top: 5px; opacity: 0.6;">&copy; 2025 ZapLink Inc.</div>
+    </div>
+  </div>
+</div>
+<div class="custom-toast" *ngIf="showError">
+
+  <span class="toast-msg">{{ errorMessage }}</span>
+
+  <div class="progress-track">
+    <div class="progress-fill"></div>
+  </div>
+
+</div>
