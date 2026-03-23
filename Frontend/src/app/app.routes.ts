@@ -14,11 +14,5 @@ export const routes: Routes = [
     },
     {
         path: 'dashboard', component: MainLayoutComponent, canActivate: [authGuard]
-        children: [
-            { path: 'home', component: HomeComponent },
-            { path: 'profile', component: ProfileComponent },
-            { path: 'settings', component: SettingsComponent },
-            { path: '', redirectTo: 'home', pathMatch: 'full' }
-        ]
     }
 ];

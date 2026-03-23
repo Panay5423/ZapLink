@@ -1,0 +1,12 @@
+# Node modules
+node_modules/
+Backend1/node_modules/
+Frontend/node_modules/
+
+# Env files (secrets)
+.env
+Backend1/.env
+Frontend/.env
+
+uploads/
+Backend1/uploads/
