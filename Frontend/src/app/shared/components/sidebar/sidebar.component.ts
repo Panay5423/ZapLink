@@ -10,12 +10,21 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent {
-  @Input() collapsed = false; // By default full width
+  @Input() collapsed = false; 
   @Output() toggleCollapse = new EventEmitter<void>();
+  user: any;
+  username: string = "";
+  UID: string = "";
+
+  ngOnInit() {
+    this.user = JSON.parse(localStorage.getItem('user') || '{}');
+    this.username = this.user.username;
+    this.UID = this.user.id;
+  }
 
 
   toggle() {
-    this.collapsed = !this.collapsed; // True/False badal dega
+  this.collapsed = !this.collapsed; // True/False badal dega
     this.toggleCollapse.emit(); // Parent ko bhi bata dega
   }
 }

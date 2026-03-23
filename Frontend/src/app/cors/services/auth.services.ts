@@ -3,7 +3,7 @@ import { environment } from "../../../environments/environment";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { LoginForm } from "../model/user.model";
-import { Subject } from "rxjs";
+
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 

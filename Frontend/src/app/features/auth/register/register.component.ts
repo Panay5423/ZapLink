@@ -2,11 +2,13 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../../cors/services/auth.services';
+import { RouterLink } from "@angular/router";
+import { Router } from "@angular/router";
 
 
 @Component({
   selector: 'app-register',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
@@ -66,14 +68,19 @@ export class RegisterComponent {
   }
 
   submit() {
-    if (this.registerForm.invalid) return;
+    console.log("fucntion run")
+    if (this.registerForm.invalid) {
+      console.log("somehting went wrong ")
+    };
 
     console.log('FINAL DATA', this.registerForm.value);
     this.authService.register(this.registerForm.value).subscribe({
       next: (res) => {
-        console.log(res);
+        console.log("responce.........", res);
         if (res.success) {
           this.verifyform.patchValue({ verificationemail: res.user.email });
+          console.log("token", res.token);
+          localStorage.setItem('token', res.token);
           this.step = 4;
 
         }
@@ -92,6 +99,7 @@ export class RegisterComponent {
         if (res.success) {
           this.showVerify = true;
           this.step = 5;
+
         }
       },
       error: (err) => {

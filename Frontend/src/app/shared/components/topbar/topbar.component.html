@@ -1,16 +1,49 @@
 <div class="topbar">
     <div class="search">
-        <input type="text" placeholder="Search" class="search-input">
+        <i class='bx bx-search search-icon'></i>
+        <input type="text" placeholder="Search users, posts..." class="search-input" [formControl]="query"
+            (focus)="query.value ? isSearchDropdownOpen = true : null" (blur)="closeDropdown()">
+
+        <!-- Dropdown Menu -->
+        <div class="search-dropdown" *ngIf="isSearchDropdownOpen">
+            <!-- Loading State -->
+            <div class="search-state" *ngIf="isLoading">
+                <i class='bx bx-loader-alt bx-spin'></i> Searching...
+            </div>
+
+            <!-- Results -->
+            <div class="search-results" *ngIf="!isLoading && searchResults.length > 0">
+                <div class="search-item" *ngFor="let user of searchResults" (mousedown)="selectUser(user)">
+                    <img [src]="user.profilePicture || user.avatar || 'https://ui-avatars.com/api/?name=' + (user.username || user.name || 'User') + '&background=random'"
+                        alt="avatar" class="search-avatar">
+                    <div class="search-info">
+                        <span class="search-username">{{user.username || user.name || 'Unknown User'}}</span>
+                        <span class="search-subtext" *ngIf="user.email || user.username">{{user.email || '@' +
+                            user.username}}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Empty State -->
+            <div class="search-state" *ngIf="!isLoading && searchResults.length === 0 && query.value">
+                No results found for "{{query.value}}"
+            </div>
+        </div>
     </div>
 
     <div class="topbar-actions">
+        <!-- Dark Mode Toggle Button -->
+        <button class="icon-btn theme-toggle" (click)="toggleTheme()" title="Toggle Dark Mode">
+            <i class='bx' [ngClass]="isDark ? 'bx-sun' : 'bx-moon'"></i>
+        </button>
+
         <button class="icon-btn notification">
-            <i class="fa-regular fa-bell"></i>
+            <i class='bx bx-bell'></i>
             <span class="dot"></span>
         </button>
 
         <button class="icon-btn add-post">
-            <i class="fa-solid fa-plus"></i>
+            <i class='bx bx-plus'></i>
         </button>
     </div>
 </div>

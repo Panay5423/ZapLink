@@ -26,16 +26,15 @@ export class LoginComponent {
     this.auth.login(this.loginForm).subscribe({
       next: (res: any) => {
         console.log(res);
-        if (res.token) {
-          console.log(res.token);
+        if (res.success) {
+          console.log("Login successful");
           localStorage.setItem('token', res.token);
-          if (res.success) {
-            console.log("Login successful");
-            console.log("saved token is ", localStorage.getItem('token'));
-            this.router.navigate(['dashboard']);
+          localStorage.setItem('user', JSON.stringify(res.user));
+          console.log("token", res.token);
+          this.router.navigate(['dashboard']);
 
-          }
         }
+
       },
       error: (err: any) => {
         console.log(err);

@@ -1,8 +1,46 @@
+:root {
+    /* Light Mode Variables */
+    --bg-main: #f1f5f9;
+    --bg-surface: #ffffff;
+    --bg-solid: #ffffff;
+    --text-primary: #0f172a;
+    --text-secondary: #64748b;
+    --border-color: rgba(15, 23, 42, 0.08);
+    --shadow-color: rgba(15, 23, 42, 0.04);
+    --hover-bg: #f8fafc;
+    --active-bg: #0f172a;
+    --active-text: #ffffff;
+    --input-bg: #f8fafc;
+    --input-border: #e2e8f0;
+    --sidebar-icon-bg: #f1f5f9;
+    --brand-color: #ef4444;
+}
+
+body.dark {
+    /* Pure Black Dark Mode Variables */
+    --bg-main: #000000;
+    --bg-surface: rgba(18, 18, 18, 0.85);
+    --bg-solid: #121212;
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0a0;
+    --border-color: rgba(255, 255, 255, 0.12);
+    --shadow-color: rgba(0, 0, 0, 0.8);
+    --hover-bg: #2a2a2a;
+    --active-bg: #ffffff;
+    --active-text: #000000;
+    --input-bg: #1a1a1a;
+    --input-border: #333333;
+    --sidebar-icon-bg: #1a1a1a;
+}
+
 html,
 body {
     margin: 0;
     padding: 0;
     width: 100%;
     height: 100%;
-
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    font-family: 'Poppins', sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
