@@ -14,8 +14,7 @@
             <!-- Results -->
             <div class="search-results" *ngIf="!isLoading && searchResults.length > 0">
                 <div class="search-item" *ngFor="let user of searchResults" (mousedown)="selectUser(user)">
-                    <img [src]="user.profilePicture || user.avatar || 'https://ui-avatars.com/api/?name=' + (user.username || user.name || 'User') + '&background=random'"
-                        alt="avatar" class="search-avatar">
+                    <img [src]="getProfileUrl(user)" alt="avatar" class="search-avatar">
                     <div class="search-info">
                         <span class="search-username">{{user.username || user.name || 'Unknown User'}}</span>
                         <span class="search-subtext" *ngIf="user.email || user.username">{{user.email || '@' +

@@ -9,8 +9,8 @@
 /* ================= LEFT PANEL (Bubbles & Brand) ================= */
 .left {
     width: 40%;
-    background: black;
-    color: #fff;
+    background: #ffffff;
+    color: #111827;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -34,7 +34,7 @@
 .bubble {
     position: absolute;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.05);
     backdrop-filter: blur(5px);
     animation: float 8s ease-in-out infinite;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
@@ -56,7 +56,7 @@
     bottom: -51px;
     right: -2px;
     animation-duration: 10s;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.05);
 }
 
 .bubble.four {
@@ -65,7 +65,7 @@
     top: 19%;
     right: 23%;
     animation-duration: 5s;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.05);
 }
 
 @keyframes float {
@@ -91,9 +91,6 @@
     font-size: 48px;
     font-weight: 800;
     margin: 0;
-    background: white;
-    -webkit-background-clip: text;
-
 }
 
 .tagline {
@@ -120,6 +117,14 @@
     transition: all 0.3s ease;
 }
 
+.steps li.clickable {
+    cursor: pointer;
+}
+
+.steps li.clickable:hover:not(.active) {
+    opacity: 0.8;
+}
+
 .step-num {
     display: inline-flex;
     justify-content: center;
@@ -127,7 +132,7 @@
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(0, 0, 0, 0.2);
     font-size: 12px;
 }
 
@@ -653,4 +658,161 @@ button {
     100% {
         transform: translateX(0);
     }
+}
+
+/* ================= DARK MODE STYLES ================= */
+.theme-toggle {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(0,0,0,0.1);
+    color: #111;
+    font-size: 20px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 100;
+    transition: 0.3s;
+    padding: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+.theme-toggle:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.dark-mode .right {
+    background: #0f172a;
+}
+.dark-mode .bg-decoration {
+    background-image: radial-gradient(#334155 1px, transparent 1px);
+}
+.dark-mode .glass-form {
+    background: rgba(30, 41, 59, 0.95);
+    border-color: #334155;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+.dark-mode .header-box h2 {
+    color: #f8fafc;
+}
+.dark-mode .header-box p {
+    color: #94a3b8;
+}
+.dark-mode .field label {
+    color: #cbd5e1;
+}
+.dark-mode .field input,
+.dark-mode .field textarea {
+    background: #0f172a;
+    border-color: #334155;
+    color: #f8fafc;
+}
+.dark-mode .field input:focus,
+.dark-mode .field textarea:focus {
+    border-color: #818cf8;
+    background: #1e293b;
+    box-shadow: 0 0 0 4px rgba(129, 140, 248, 0.1);
+}
+.dark-mode .field input::placeholder,
+.dark-mode .field textarea::placeholder {
+    color: #64748b;
+}
+.dark-mode .toggle-card {
+    background: #0f172a;
+    border-color: #334155;
+}
+.dark-mode .toggle-card .text span {
+    color: #f8fafc;
+}
+.dark-mode .toggle-card .text small {
+    color: #94a3b8;
+}
+.dark-mode .image-preview {
+    background-color: #0f172a;
+    border-color: #334155;
+}
+.dark-mode .terms span {
+    color: #cbd5e1;
+}
+.dark-mode .terms a {
+    color: #818cf8;
+}
+.dark-mode .btn-primary {
+    background: #6366f1;
+    color: white;
+}
+.dark-mode .btn-primary:hover {
+    background: #818cf8;
+    color: white;
+}
+.dark-mode .btn-secondary {
+    background: #334155;
+    color: #f8fafc;
+}
+.dark-mode .btn-secondary:hover {
+    background: #475569;
+}
+.dark-mode .theme-toggle {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+.dark-mode .theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+.dark-mode .verify-card {
+    background: rgba(30, 41, 59, 0.95);
+    border-color: #334155;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+}
+.dark-mode .verify-card h2 {
+    color: #f8fafc;
+}
+.dark-mode .verify-card p {
+    color: #94a3b8;
+}
+.dark-mode .verify-success p {
+    color: #94a3b8;
+}
+.dark-mode .otp-input {
+    background: #0f172a;
+    border-color: #334155;
+    color: #f8fafc;
+}
+.dark-mode .otp-input:focus {
+    border-color: #818cf8;
+    box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.2);
+}
+.dark-mode .resend {
+    color: #94a3b8;
+}
+.dark-mode .resend a, 
+.dark-mode .success-arrow {
+    color: #818cf8;
+}
+
+.dark-mode .left {
+    background: #000000;
+    color: #ffffff;
+}
+
+.dark-mode .bubble,
+.dark-mode .bubble.three,
+.dark-mode .bubble.four {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode .step-num {
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.dark-mode .steps li.active .step-num {
+    background: #6366f1;
+    border-color: #6366f1;
+    color: white;
 }

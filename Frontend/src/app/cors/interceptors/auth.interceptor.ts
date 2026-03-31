@@ -6,7 +6,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   console.log(req.url)
   const token = localStorage.getItem('token');
 
-  if (token && req.url.includes('auth')) {
+  if (token && req.url.includes('auth') || req.url.includes('social')) {
     console.log("token......", token);
     const reqWithHeader = req.clone({
       setHeaders: {

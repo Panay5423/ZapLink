@@ -13,6 +13,9 @@ export const routes: Routes = [
 
     },
     {
-        path: 'dashboard', component: MainLayoutComponent, canActivate: [authGuard]
+        path: 'dashboard/:id', component: MainLayoutComponent, canActivate: [authGuard],
+    },
+    {
+        path: 'dashboard', component: MainLayoutComponent, canActivate: [authGuard],
     }
 ];

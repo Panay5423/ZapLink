@@ -1,4 +1,4 @@
-<div class="register-wrapper">
+<div class="register-wrapper" [class.dark-mode]="isDarkMode">
 
     <div class="left">
         <div class="bubbles">
@@ -13,13 +13,13 @@
             <p class="tagline">Connect. Collaborate. Create.</p>
 
             <ul class="steps">
-                <li [class.active]="step === 1">
+                <li [class.active]="step === 1" (click)="goToStep(1)" [class.clickable]="step < 4">
                     <span class="step-num">01</span> Profile Setup
                 </li>
-                <li [class.active]="step === 2">
+                <li [class.active]="step === 2" (click)="goToStep(2)" [class.clickable]="step < 4">
                     <span class="step-num">02</span> Security & Bio
                 </li>
-                <li [class.active]="step === 3">
+                <li [class.active]="step === 3" (click)="goToStep(3)" [class.clickable]="step < 4">
                     <span class="step-num">03</span> Final Polish
                 </li>
                 <li [class.active]="step === 4">
@@ -30,6 +30,11 @@
     </div>
 
     <div class="right">
+        <!-- Theme Toggle -->
+        <button class="theme-toggle" type="button" (click)="toggleTheme()">
+            {{ isDarkMode ? '☀️' : '🌙' }}
+        </button>
+
         <div class="bg-decoration"></div>
 
         <form [formGroup]="registerForm" class="glass-form">

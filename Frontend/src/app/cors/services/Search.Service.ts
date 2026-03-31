@@ -8,12 +8,23 @@ export class SearchService {
 
     constructor(private http: HttpClient) { }
     private baseUrl = environment.BaseAPiURL;
+    get_token = {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+    }
 
     search(query: string): Observable<any> {
         console.log("search service", query)
         return this.http.get(`${this.baseUrl}action/search_user?query=${query}`)
 
     }
+    GetUserprofile(id: String): Observable<any> {
+        console.log("get user profile service", id)
+        return this.http.get(`${this.baseUrl}action/view_user/${id}`
+            , { headers: this.get_token }
+        )
+
+    }
 }
 
 
+//action/view_user/:id

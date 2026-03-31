@@ -31,6 +31,7 @@ export class LoginComponent {
           localStorage.setItem('token', res.token);
           localStorage.setItem('user', JSON.stringify(res.user));
           console.log("token", res.token);
+          console.log("neavighation")
           this.router.navigate(['dashboard']);
 
         }

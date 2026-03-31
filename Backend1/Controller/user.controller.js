@@ -57,6 +57,9 @@ exports.RegisterUser = async (req, res) => {
       isVerified: false
     });
 
+    if (req.files && req.files['profilePicture']) {
+      newUser.profilePicture = req.files['profilePicture'][0].filename;
+    }
 
     await newUser.save();
 

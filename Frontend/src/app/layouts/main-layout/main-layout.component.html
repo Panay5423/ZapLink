@@ -8,7 +8,89 @@
         <app-topbar class="topbar"></app-topbar>
 
         <div class="main">
-            <router-outlet></router-outlet>
+            <!-- Normal Routing -->
+            <router-outlet *ngIf="!view_user"></router-outlet>
+
+            <!-- User Profile View -->
+            <div class="profile-container" *ngIf="view_user">
+
+                <div class="profile-header">
+                    <div class="profile-avatar">
+                        <img [src]="getProfileUrl(view_user)" alt="Profile Picture">
+                    </div>
+
+                    <div class="profile-info">
+                        <h2>{{view_user.username}}</h2>
+                        <p class="bio">{{view_user.bio || 'No Bio yet'}}</p>
+
+                        <div class="profile-stats">
+                            <div class="stat">
+                                <span class="stat-value">{{view_user.posts?.length || 0}}</span>
+                                <span class="stat-label">Posts</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value">{{view_user.followers?.length || 0}}</span>
+                                <span class="stat-label">Followers</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value">{{view_user.followings?.length || 0}}</span>
+                                <span class="stat-label">Following</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-actions" *ngIf="!isOwnProfile()">
+                        <button class="btn btn-primary" *ngIf="!view_user.isFollowing" (click)="followUser()">
+                            <i class='bx bx-user-plus'></i> Follow
+                        </button>
+                        <button class="btn btn-secondary" *ngIf="view_user.isFollowing">
+                            <i class='bx bx-user-check'></i> Following
+                        </button>
+                        <button class="btn btn-icon">
+                            <i class='bx bx-message-rounded-dots'></i>
+                        </button>
+                        
+                        <!-- 3 Dot More Options Menu -->
+                        <div class="more-options-container">
+                            <button class="btn btn-icon" (click)="toggleProfileMenu($event)">
+                                <i class='bx bx-dots-vertical-rounded'></i>
+                            </button>
+                            
+                            <div class="profile-dropdown-menu" *ngIf="isProfileMenuOpen">
+                                <button class="dropdown-item" (click)="unfollowUser()" *ngIf="view_user.isFollowing">
+                                    <i class='bx bx-user-x'></i> Unfollow
+                                </button>
+                                <button class="dropdown-item danger" (click)="blockUser()">
+                                    <i class='bx bx-block'></i> Block
+                                </button>
+                                <button class="dropdown-item danger" (click)="reportUser()">
+                                    <i class='bx bx-flag'></i> Report
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-content">
+                    <!-- Posts Grid (If Following or Own Profile) -->
+                    <ng-container *ngIf="view_user.isFollowing || isOwnProfile(); else notFollowing">
+                        <div class="empty-state">
+                            <i class='bx bx-image-alt'></i>
+                            <h3>No posts to show</h3>
+                            <p>When {{view_user.username}} posts something, you'll see it here.</p>
+                        </div>
+                    </ng-container>
+
+                    <!-- Locked State (If Not Following) -->
+                    <ng-template #notFollowing>
+                        <div class="empty-state locked-state">
+                            <i class='bx bx-lock-alt'></i>
+                            <h3>This Profile is Private</h3>
+                            <p>Follow {{view_user.username}} to view their posts and photos.</p>
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
         </div>
 
     </div>

@@ -16,7 +16,10 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage });
-userRoutes.post('/register', UserCntroller.RegisterUser);
+
+userRoutes.post('/register', upload.fields([{ name: 'profilePicture', maxCount: 1 }]),
+    UserCntroller.RegisterUser);
+
 userRoutes.post('/verify', UserCntroller.verifyUserMail);
 userRoutes.post('/login', UserCntroller.loginUser)
 userRoutes.patch('/customize', authMiddleware, upload.fields([

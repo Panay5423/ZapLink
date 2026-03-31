@@ -18,6 +18,11 @@ export class RegisterComponent {
   profilePreview: string | ArrayBuffer | null = null;
   emial: string = '';
   showVerify: boolean = false;
+  isDarkMode: boolean = false;
+
+  toggleTheme() {
+    this.isDarkMode = !this.isDarkMode;
+  }
 
   registerForm: FormGroup;
   verifyform: FormGroup;
@@ -56,6 +61,12 @@ export class RegisterComponent {
     if (this.step > 1) this.step--;
   }
 
+  goToStep(newStep: number) {
+    if (this.step < 4 && newStep >= 1 && newStep <= 3) {
+      this.step = newStep;
+    }
+  }
+
   onFileSelect(event: any) {
     const file = event.target.files[0];
     if (!file) return;
@@ -73,8 +84,21 @@ export class RegisterComponent {
       console.log("somehting went wrong ")
     };
 
-    console.log('FINAL DATA', this.registerForm.value);
-    this.authService.register(this.registerForm.value).subscribe({
+    const formValue = this.registerForm.value;
+    const formData = new FormData();
+
+    Object.keys(formValue).forEach(key => {
+      if (key !== 'profilePic' && formValue[key] !== null && formValue[key] !== undefined) {
+        formData.append(key, formValue[key]);
+      }
+    });
+
+    if (formValue.profilePic) {
+      formData.append('profilePicture', formValue.profilePic);
+    }
+
+    console.log('FINAL DATA', formValue);
+    this.authService.register(formData).subscribe({
       next: (res) => {
         console.log("responce.........", res);
         if (res.success) {

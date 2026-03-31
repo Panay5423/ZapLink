@@ -49,13 +49,22 @@
     </ul>
 
     <div class="sidebar-footer">
-        <button class="logout-btn">
-            <i class='bx bx-log-out'></i>
-            <span class="link-text">Logout</span>
+        <button class="logout-btn" (click)="logOut()" [disabled]="isLoggingOut">
+            <i class='bx' [ngClass]="isLoggingOut ? 'bx-loader-alt bx-spin' : 'bx-log-out'"></i>
+            <span class="link-text">{{ isLoggingOut ? 'Logging out...' : 'Logout' }}</span>
         </button>
         <div class="profile">
-            <img src="" alt="">
+            <img [src]="getProfileUrl(user)" alt="Profile">
             <span class="link-text">{{username}}</span>
         </div>
+    </div>
+</div>
+
+<!-- Logout Overlay -->
+<div class="logout-overlay" *ngIf="isLoggingOut">
+    <div class="overlay-content">
+        <i class='bx bx-loader-alt bx-spin'></i>
+        <h2>Logging out</h2>
+        <p>See you soon!</p>
     </div>
 </div>
