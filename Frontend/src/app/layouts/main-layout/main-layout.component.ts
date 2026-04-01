@@ -4,6 +4,7 @@ import { RouterOutlet, Router } from '@angular/router';
 import { SidebarComponent } from '../../shared/components/sidebar/sidebar.component';
 import { TopbarComponent } from '../../shared/components/topbar/topbar.component';
 import { SearchService } from '../../cors/services/Search.Service';
+import { CreatePostComponent } from '../../shared/components/create-post/create-post.component';
 import { ActivatedRoute } from '@angular/router';
 import { __param } from 'tslib';
 import { environment } from '../../../environments/environment';
@@ -13,7 +14,7 @@ import { SocketService } from '../../cors/services/socket.services';
 @Component({
   selector: 'app-main-layout',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, SidebarComponent, TopbarComponent],
+  imports: [CommonModule, RouterOutlet, SidebarComponent, TopbarComponent, CreatePostComponent],
   templateUrl: './main-layout.component.html',
   styleUrl: './main-layout.component.css'
 })
@@ -21,6 +22,11 @@ export class MainLayoutComponent {
   isCollapsed = false;
   view_user: any;
   loggedInUserId: string = '';
+  showCreatePostModal = false;
+
+  toggleCreatePostModal() {
+    this.showCreatePostModal = !this.showCreatePostModal;
+  }
 
   constructor(private router: Router, private searchService: SearchService, private route: ActivatedRoute, private socialService: SocialService, private socketService: SocketService) { }
   ngOnInit() {
@@ -68,7 +74,8 @@ export class MainLayoutComponent {
 
   isOwnProfile(): boolean {
     if (!this.view_user || !this.loggedInUserId) return false;
-    // Safely compare IDs, accounting for possible missing fields
+
+
     const viewId = String(this.view_user._id || this.view_user.id || '');
     const myId = String(this.loggedInUserId || '');
     return viewId !== '' && viewId === myId;

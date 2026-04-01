@@ -1,6 +1,6 @@
 <div class="app-shell" [class.collapsed]="isCollapsed">
 
-    <app-sidebar class="sidebar" (toggleCollapse)="toggleSidebar()">
+    <app-sidebar class="sidebar" (toggleCollapse)="toggleSidebar()" (openCreatePost)="toggleCreatePostModal()">
     </app-sidebar>
 
     <div class="app-right">
@@ -49,13 +49,13 @@
                         <button class="btn btn-icon">
                             <i class='bx bx-message-rounded-dots'></i>
                         </button>
-                        
+
                         <!-- 3 Dot More Options Menu -->
                         <div class="more-options-container">
                             <button class="btn btn-icon" (click)="toggleProfileMenu($event)">
                                 <i class='bx bx-dots-vertical-rounded'></i>
                             </button>
-                            
+
                             <div class="profile-dropdown-menu" *ngIf="isProfileMenuOpen">
                                 <button class="dropdown-item" (click)="unfollowUser()" *ngIf="view_user.isFollowing">
                                     <i class='bx bx-user-x'></i> Unfollow
@@ -95,3 +95,5 @@
 
     </div>
 </div>
+
+<app-create-post *ngIf="showCreatePostModal" (close)="toggleCreatePostModal()"></app-create-post>

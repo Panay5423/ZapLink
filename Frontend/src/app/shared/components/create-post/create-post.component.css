@@ -1,0 +1,285 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-content {
+  background: #ffffff;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 550px;
+  padding: 30px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(40px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.modal-header h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1a1b1e;
+  margin: 0;
+}
+
+.close-btn {
+  background: #f1f3f5;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: #495057;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.close-btn:hover {
+  background: #e9ecef;
+  transform: rotate(90deg);
+}
+
+.upload-section {
+  background: #f8f9fa;
+  border: 2px dashed #ced4da;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  margin-bottom: 20px;
+  transition: all 0.2s ease;
+}
+
+.upload-section:hover {
+  border-color: #4c6fff;
+  background: #f0f3ff;
+}
+
+.upload-section label:first-child {
+  display: block;
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 10px;
+}
+
+.file-input {
+  display: none;
+}
+
+.upload-btn {
+  display: inline-block;
+  background: #e7f0ff;
+  color: #4c6fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 10px;
+}
+
+.upload-btn:hover {
+  background: #d0e1ff;
+}
+
+.upload-btn i {
+  margin-right: 5px;
+  font-size: 1.1rem;
+}
+
+.alt-btn {
+  background: #f1f3f5;
+  color: #495057;
+}
+.alt-btn:hover {
+  background: #e9ecef;
+}
+
+.image-preview img {
+  max-width: 100%;
+  max-height: 250px;
+  border-radius: 8px;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  display: block;
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 8px;
+}
+
+.input-group textarea {
+  width: 100%;
+  border: 1px solid #ced4da;
+  border-radius: 10px;
+  padding: 12px;
+  font-family: inherit;
+  font-size: 1rem;
+  resize: none;
+  transition: border-color 0.2s;
+}
+
+.input-group textarea:focus {
+  outline: none;
+  border-color: #4c6fff;
+  box-shadow: 0 0 0 3px rgba(76, 111, 255, 0.15);
+}
+
+.audio-player {
+  background: #e7f0ff;
+  color: #4c6fff;
+  padding: 12px 15px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  margin-bottom: 15px;
+}
+
+.audio-player i {
+  font-size: 1.3rem;
+  margin-right: 10px;
+}
+
+.trimmer {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.trimmer p {
+  font-size: 0.9rem;
+  color: #6c757d;
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+.range-sliders {
+  display: flex;
+  gap: 15px;
+}
+
+.slider-group {
+  flex: 1;
+}
+
+.slider-group label {
+  display: block;
+  font-size: 0.85rem;
+  color: #495057;
+  margin-bottom: 5px;
+  text-align: left;
+}
+
+.slider-group input[type=range] {
+  width: 100%;
+  accent-color: #4c6fff;
+}
+
+.play-snippet-btn {
+  margin-top: 15px;
+  background: linear-gradient(135deg, #1bd954, #12a63d);
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  transition: opacity 0.2s;
+}
+
+.play-snippet-btn:hover {
+  opacity: 0.9;
+}
+
+.play-snippet-btn i {
+  margin-right: 6px;
+  font-size: 1.2rem;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.btn {
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.1s, opacity 0.2s;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn-secondary {
+  background: #f1f3f5;
+  color: #495057;
+}
+
+.btn-secondary:hover {
+  background: #e9ecef;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #4c6fff, #2b4cd9);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+}
+
+.btn-primary:disabled {
+  background: #aab8f0;
+  cursor: not-allowed;
+  transform: none;
+}

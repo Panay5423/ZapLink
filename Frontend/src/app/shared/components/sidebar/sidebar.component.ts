@@ -13,6 +13,8 @@ import { Router } from '@angular/router';
 export class SidebarComponent {
   @Input() collapsed = false;
   @Output() toggleCollapse = new EventEmitter<void>();
+  @Output() openCreatePost = new EventEmitter<void>();
+  
   user: any;
   username: string = "";
   UID: string = "";
@@ -40,6 +42,10 @@ export class SidebarComponent {
   toggle() {
     this.collapsed = !this.collapsed; // True/False badal dega
     this.toggleCollapse.emit(); // Parent ko bhi bata dega
+  }
+
+  onOpenCreatePost() {
+    this.openCreatePost.emit();
   }
 
   getProfileUrl(user: any): string {

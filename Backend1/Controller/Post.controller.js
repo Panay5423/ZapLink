@@ -9,14 +9,13 @@ exports.NewPost = async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).send({
-        message:
-          'image not found'
+        message: 'image not found'
       })
     }
     const newData = new PostModel({
       Caption: req.body.Caption,
       PostImage: `/uploads/${req.file.filename}`,
-      Song: {
+      song: {
         title: req.body.SongTitle || "",
         artist: req.body.SongArtist || "",
         url: req.body.SongUrl || "",

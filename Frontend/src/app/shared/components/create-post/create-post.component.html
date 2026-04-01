@@ -1,0 +1,38 @@
+<div class="modal-overlay">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Create New Post</h2>
+      <button class="close-btn" (click)="onClose()"><i class='bx bx-x'></i></button>
+    </div>
+
+    <div class="modal-body">
+      
+      <!-- Image Upload Section -->
+      <div class="upload-section">
+        <label>Post Image (Required)</label>
+        <div class="image-preview" *ngIf="postImagePreview">
+          <img [src]="postImagePreview" alt="Preview" />
+        </div>
+        <input type="file" accept="image/*" (change)="onImageSelected($event)" id="imageUpload" class="file-input" />
+        <label for="imageUpload" class="upload-btn">
+             <i class='bx bx-image-add'></i> Select Image
+        </label>
+      </div>
+
+      <!-- Caption Section -->
+      <div class="input-group">
+        <label>Caption</label>
+        <textarea [(ngModel)]="caption" placeholder="Write something about this post..." rows="3"></textarea>
+      </div>
+
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-secondary" (click)="onClose()">Cancel</button>
+      <button class="btn btn-primary" (click)="submitPost()" [disabled]="!postImageFile || isSubmitting">
+        <span *ngIf="!isSubmitting">Post</span>
+        <span *ngIf="isSubmitting"><i class='bx bx-loader-alt bx-spin'></i> Posting...</span>
+      </button>
+    </div>
+  </div>
+</div>
