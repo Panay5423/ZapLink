@@ -1,0 +1,29 @@
+/* Fallback constraints. These guarantee structure even if Tailwind watchers lose sync during hot-reloads */
+
+.notif-wrapper {
+  position: fixed !important;
+  top: 5rem !important;
+  right: 1rem !important;
+  z-index: 9999 !important;
+}
+
+.notif-card {
+  width: 260px;
+}
+
+.notif-icon-container {
+  width: 40px;
+  height: 40px;
+}
+
+.notif-icon {
+  width: 20px !important;
+  height: 20px !important;
+  min-width: 20px;
+  min-height: 20px;
+}
+
+.notif-close-icon {
+  width: 16px !important;
+  height: 16px !important;
+}

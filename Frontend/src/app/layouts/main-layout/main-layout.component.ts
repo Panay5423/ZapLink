@@ -52,9 +52,9 @@ export class MainLayoutComponent {
         console.log("no id found");
 
       }
-      this.socketService.on('notification', (data) => {
-        console.log('Notification received:', data);
-      });
+
+      this.socketService.SocketConnetion(this.loggedInUserId);
+
     })
 
   }

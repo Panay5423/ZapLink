@@ -1,28 +1,25 @@
 
-const { userSoket } = require('./socket')
+
+const { GetIo, OnlineUser } = require('./socket')
 
 function SendNotification(targetUserId, message, currentUserId) {
-    console.log(userSoket)
-    const socket = userSoket[targetUserId];
-    console.log("Sending notification to:", targetUserId);
-    console.log("Available sockets:", Object.keys(userSoket));
-
+    const io = GetIo();;
+    const socket = OnlineUser.get(targetUserId)
+    console.log("socket", socket)
     if (!socket) {
-        console.log("user is ofline")
+        console.log("user is offline")
         return;
+
+    }
+    console.log("user is online")
+    io.to(socket).emit(
+        "Notification", {
+        message: message,
+        from: currentUserId
     }
 
-    if (socket.readyState === 1) {
-        console.log(socket.readyState)
-        console.log("notification send ")
-        socket.send(
-            JSON.stringify({
-                type: "NOTIFICATION",
-                message: message,
-                from: currentUserId
-            })
-        )
-    }
+    )
+    console.log("notification sent")
 
 }
 module.exports = SendNotification;
