@@ -16,6 +16,9 @@ export class NotificationService {
   private notificationsSignal = signal<AppNotification[]>([]);
   public notifications = this.notificationsSignal.asReadonly();
 
+  private historySignal = signal<AppNotification[]>([]);
+  public history = this.historySignal.asReadonly();
+
   constructor() { }
 
   show(message: string, from?: string, type: AppNotification['type'] = 'info') {
@@ -24,8 +27,9 @@ export class NotificationService {
     const newNotification: AppNotification = { id, message, from, type, timestamp: new Date() };
 
     this.notificationsSignal.update(state => [newNotification, ...state]);
+    this.historySignal.update(state => [newNotification, ...state]);
 
-    // Auto-remove after 5 seconds
+    // Auto-remove after 5 seconds from the toast popup, but keep it in history window
     setTimeout(() => {
       this.remove(id);
     }, 5000);
@@ -33,5 +37,9 @@ export class NotificationService {
 
   remove(id: string) {
     this.notificationsSignal.update(state => state.filter(n => n.id !== id));
+  }
+
+  clearHistory() {
+    this.historySignal.set([]);
   }
 }

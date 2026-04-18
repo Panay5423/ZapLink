@@ -46,7 +46,7 @@ exports.followUser = async (req, res) => {
 
         if (pendingRequest) {
             // Cancel request on toggle
-          
+
             await FollowRequest.deleteOne({ _id: pendingRequest._id });
             return res.status(200).json({ followStatus: "UNREQUESTED", message: "Request cancelled" });
         }
@@ -58,8 +58,10 @@ exports.followUser = async (req, res) => {
                 to: targetUser._id,
                 status: "pending",
             });
+            const TargetUserName = await userModel.findById(targetUserId).select("username");
             console.log("request send")
-            SendNotification(targetUserId, "you have folllow request from this", currentUserId);
+
+            SendNotification(targetUserId, "you have folllow request from " + TargetUserName.username, currentUserId);
 
             return res.status(200).json({ followStatus: "REQUESTED" });
         }

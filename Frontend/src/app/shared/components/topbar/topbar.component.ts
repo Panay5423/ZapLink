@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Output, OnInit } from '@angular/core';
+import { Component, EventEmitter, Output, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SearchService } from '../../../cors/services/Search.Service';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from '../../../../environments/environment';
+import { NotificationService } from '../../../cors/services/notification.service';
 
 @Component({
   selector: 'app-topbar',
@@ -15,7 +16,11 @@ import { environment } from '../../../../environments/environment';
 })
 export class TopbarComponent implements OnInit {
 
-  constructor(private searchService: SearchService, private router: Router) { }
+  constructor(
+    private searchService: SearchService,
+    private router: Router,
+    public notificationService: NotificationService
+  ) { }
 
   @Output() toggle = new EventEmitter<void>();
 
@@ -25,6 +30,20 @@ export class TopbarComponent implements OnInit {
   searchResults: any[] = [];
   isSearchDropdownOpen: boolean = false;
   isLoading: boolean = false;
+
+  isNotificationDropdownOpen: boolean = false;
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const targetElement = event.target as HTMLElement;
+    if (targetElement && !targetElement.closest('.notification-container')) {
+      this.isNotificationDropdownOpen = false;
+    }
+  }
+
+  toggleNotificationDropdown() {
+    this.isNotificationDropdownOpen = !this.isNotificationDropdownOpen;
+  }
 
   ngOnInit() {
     this.isDark = localStorage.getItem('theme') === 'dark';
@@ -82,7 +101,7 @@ export class TopbarComponent implements OnInit {
     this.router.navigate(['/dashboard', user._id]).then(() => {
       console.log("neviucation done");
     });
-    // Handle navigation or user selection logic here
+
 
   }
 

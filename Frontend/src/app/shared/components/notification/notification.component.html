@@ -1,42 +1,36 @@
-<div class="notif-wrapper fixed top-20 right-4 z-[9999] flex flex-col gap-2.5 pointer-events-none">
+<div class="notif-wrapper">
   @for (notif of notificationService.notifications(); track notif.id) {
-    <div 
-      [@toastAnimation]
-      class="notif-card pointer-events-auto flex items-start gap-3 p-3 w-[260px] rounded-xl border border-gray-700/60 bg-gray-950 shadow-lg shadow-blue-500/20 text-white overflow-hidden relative group"
-    >
+    <div [@toastAnimation] class="notif-card">
       <!-- Glowing edge accent -->
-      <div class="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-blue-500 to-indigo-600 shadow-[0_0_8px_rgba(99,102,241,0.6)]"></div>
+      <div class="edge-accent"></div>
 
       <!-- Icon / Avatar -->
-      <div class="notif-icon-container flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-gray-800 to-gray-950 border border-gray-700/80 shadow-inner overflow-hidden mt-0.5">
-        <svg class="notif-icon w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <div class="notif-icon-container">
+        <svg class="notif-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
         </svg>
       </div>
 
       <!-- Content -->
-      <div class="flex-1 min-w-0 ml-1">
-        <h4 class="text-[14px] font-semibold tracking-wide text-gray-100 flex items-center gap-2 m-0 leading-none">
+      <div class="notif-content">
+        <h4 class="notif-title">
           New Notification
-          <span class="flex h-2 w-2 relative">
-            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+          <span class="pulse-indicator">
+            <span class="ping"></span>
+            <span class="dot"></span>
           </span>
         </h4>
-        <p class="text-[13px] text-gray-300 mt-1.5 break-words leading-relaxed m-0">
+        <p class="notif-message">
           {{ notif.message }}
         </p>
         @if (notif.from) {
-          <p class="text-[11px] text-gray-500 mt-2 truncate font-mono tracking-wide m-0">UID: {{ notif.from.substring(0, 10) }}...</p>
+          <p class="notif-uid">UID: {{ notif.from.substring(0, 10) }}...</p>
         }
       </div>
 
       <!-- Close Button -->
-      <button 
-        (click)="notificationService.remove(notif.id)"
-        class="text-gray-500 hover:text-white bg-transparent hover:bg-gray-700/50 p-1.5 rounded-full transition-colors duration-200 focus:outline-none -mr-1 -mt-1 cursor-pointer flex items-center justify-center"
-      >
-        <svg class="notif-close-icon w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <button class="close-btn" (click)="notificationService.remove(notif.id)">
+        <svg class="notif-close-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
         </svg>
       </button>
