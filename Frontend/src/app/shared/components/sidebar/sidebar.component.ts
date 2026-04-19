@@ -14,6 +14,7 @@ export class SidebarComponent {
   @Input() collapsed = false;
   @Output() toggleCollapse = new EventEmitter<void>();
   @Output() openCreatePost = new EventEmitter<void>();
+  @Output() openChat = new EventEmitter<void>();
   
   user: any;
   username: string = "";
@@ -46,6 +47,10 @@ export class SidebarComponent {
 
   onOpenCreatePost() {
     this.openCreatePost.emit();
+  }
+
+  onOpenChat() {
+    this.openChat.emit();
   }
 
   getProfileUrl(user: any): string {

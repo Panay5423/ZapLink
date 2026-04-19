@@ -1,6 +1,6 @@
 <div class="app-shell" [class.collapsed]="isCollapsed">
 
-    <app-sidebar class="sidebar" (toggleCollapse)="toggleSidebar()" (openCreatePost)="toggleCreatePostModal()">
+    <app-sidebar class="sidebar" (toggleCollapse)="toggleSidebar()" (openCreatePost)="toggleCreatePostModal()" (openChat)="toggleChatbox()">
     </app-sidebar>
 
     <div class="app-right">
@@ -97,3 +97,4 @@
 </div>
 
 <app-create-post *ngIf="showCreatePostModal" (close)="toggleCreatePostModal()"></app-create-post>
+<app-chatbox *ngIf="showChatbox" (close)="toggleChatbox()"></app-chatbox>

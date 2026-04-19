@@ -101,8 +101,6 @@ export class TopbarComponent implements OnInit {
     this.router.navigate(['/dashboard', user._id]).then(() => {
       console.log("neviucation done");
     });
-
-
   }
 
   getProfileUrl(user: any): string {

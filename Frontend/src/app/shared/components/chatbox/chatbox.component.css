@@ -1,0 +1,137 @@
+.chatbox-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: flex-end;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.chatbox-content {
+  width: 400px;
+  max-width: 100%;
+  height: 100%;
+  background: #121212;
+  border-left: 1px solid #333;
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  animation: slideInRight 0.3s ease;
+}
+
+.chatbox-header {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #333;
+}
+
+.chatbox-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: #a0a0a0;
+  cursor: pointer;
+  transition: color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-btn:hover {
+  color: #ff4757;
+}
+
+.chatbox-search {
+  padding: 15px 20px;
+  border-bottom: 1px solid #333;
+}
+
+.search-input-wrapper {
+  display: flex;
+  align-items: center;
+  background: #1f1f1f;
+  border-radius: 8px;
+  padding: 0 12px;
+  border: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.search-input-wrapper:focus-within {
+  border-color: #00d2ff;
+}
+
+.search-input-wrapper i {
+  color: #a0a0a0;
+  font-size: 1.2rem;
+}
+
+.search-input-wrapper input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  padding: 10px;
+  color: #fff;
+  font-size: 0.95rem;
+  outline: none;
+}
+
+.search-input-wrapper input::placeholder {
+  color: #888;
+}
+
+.chatbox-body {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.empty-chat-state {
+  text-align: center;
+  color: #888;
+}
+
+.empty-chat-state i {
+  font-size: 4rem;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.empty-chat-state h3 {
+  color: #e0e0e0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.empty-chat-state p {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin: 0;
+}
+
+@keyframes fadeIn {
+  from { background: rgba(0, 0, 0, 0); backdrop-filter: blur(0); }
+  to { background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); }
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}

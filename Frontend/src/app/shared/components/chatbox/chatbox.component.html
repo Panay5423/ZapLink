@@ -1,0 +1,23 @@
+<div class="chatbox-overlay" (click)="onClose()">
+  <div class="chatbox-content" (click)="$event.stopPropagation()">
+    <div class="chatbox-header">
+      <h2>Messages</h2>
+      <button class="close-btn" (click)="onClose()"><i class='bx bx-x'></i></button>
+    </div>
+
+    <div class="chatbox-search">
+      <div class="search-input-wrapper">
+        <i class='bx bx-search'></i>
+        <input type="text" [(ngModel)]="searchQuery" (input)="onSearch()" placeholder="Search people..." />
+      </div>
+    </div>
+
+    <div class="chatbox-body">
+      <div class="empty-chat-state">
+        <i class='bx bx-message-square-dots'></i>
+        <h3>No chats right now</h3>
+        <p>Search for a follower to start a conversation.</p>
+      </div>
+    </div>
+  </div>
+</div>

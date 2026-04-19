@@ -5,6 +5,7 @@ const authMiddleware = require('../Auth/req.user');
 const follow = require('../Controller/follower-following.controller');
 const SendNotification = require('../Controller/notification.controller')
 
+
 const projectroutes = express.Router();
 
 projectroutes.get('/search_user', search_fun.search_fun);
