@@ -138,3 +138,77 @@ exports.unfollowUser = async (req, res) => {
         res.status(500).json({ message: "Internal server error" });
     }
 };
+
+exports.acceptFollowRequest = async (req, res) => {
+    try {
+        const requestId = req.params.requestId;
+        const currentUserId = req.user.id;
+
+        const request = await FollowRequest.findById(requestId);
+
+        if (!request) {
+            return res.status(404).json({ message: "Request not found" });
+        }
+
+        if (request.to.toString() !== currentUserId) {
+            return res.status(403).json({ message: "Unauthorized to accept this request" });
+        }
+
+        if (request.status !== "pending") {
+            return res.status(400).json({ message: "Request is no longer pending" });
+        }
+
+        const targetUser = await userModel.findById(request.to); // Current User
+        const requesterUser = await userModel.findById(request.from); // User who sent request
+
+        if (!targetUser || !requesterUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        // Add to followers/following
+        if (!targetUser.followers.includes(request.from)) {
+            targetUser.followers.push(request.from);
+        }
+        if (!requesterUser.following.includes(request.to)) {
+            requesterUser.following.push(request.to);
+        }
+
+        await targetUser.save();
+        await requesterUser.save();
+
+        // Update status and save, or delete. Deleting cleans up db.
+        await FollowRequest.deleteOne({ _id: requestId });
+
+        // Send Real-time Notification
+        SendNotification(request.from, targetUser.username + " accepted your follow request", request.to);
+
+        return res.status(200).json({ message: "Request accepted successfully" });
+    } catch (error) {
+        console.error("Accept Request Error:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
+
+exports.rejectFollowRequest = async (req, res) => {
+    try {
+        const requestId = req.params.requestId;
+        const currentUserId = req.user.id;
+
+        const request = await FollowRequest.findById(requestId);
+
+        if (!request) {
+            return res.status(404).json({ message: "Request not found" });
+        }
+
+        if (request.to.toString() !== currentUserId) {
+            return res.status(403).json({ message: "Unauthorized to reject this request" });
+        }
+
+        await FollowRequest.deleteOne({ _id: requestId });
+
+        return res.status(200).json({ message: "Request rejected successfully" });
+    } catch (error) {
+        console.error("Reject Request Error:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};

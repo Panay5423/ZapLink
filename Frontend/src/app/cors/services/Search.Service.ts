@@ -8,8 +8,10 @@ export class SearchService {
 
     constructor(private http: HttpClient) { }
     private baseUrl = environment.BaseAPiURL;
-    get_token = {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
+    private get get_token() {
+        return {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        };
     }
 
     search(query: string): Observable<any> {

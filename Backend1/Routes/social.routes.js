@@ -7,6 +7,9 @@ const SendNotification = require('../Controller/notification.controller')
 socialRoutes.post('/follow/:id', authMiddleware, follow_following.followUser);
 socialRoutes.post('/unfollow/:id', authMiddleware, follow_following.unfollowUser);
 
+socialRoutes.post('/follow/accept/:requestId', authMiddleware, follow_following.acceptFollowRequest);
+socialRoutes.post('/follow/reject/:requestId', authMiddleware, follow_following.rejectFollowRequest);
+
 socialRoutes.get('/notification', authMiddleware, SendNotification.GetNotification)
 
 

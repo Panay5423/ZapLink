@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { SocialService } from '../../../cors/services/Social.services';
 
 @Component({
   selector: 'app-chatbox',
@@ -17,11 +18,27 @@ export class ChatboxComponent {
   followers: any[] = [];
   filteredFollowers: any[] = [];
 
+  constructor(private socialService: SocialService) { }
+  ngOnInit() {
+    this.loadFollowers();
+  }
+  loadFollowers() {
+    this.socialService.getFollowers().subscribe({
+      next: (res) => {
+        console.log(res);
+        this.followers = res;
+        this.filteredFollowers = res;
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
+  }
   onClose() {
     this.close.emit();
   }
 
   onSearch() {
-    // Basic search functionality placeholder
+
   }
 }

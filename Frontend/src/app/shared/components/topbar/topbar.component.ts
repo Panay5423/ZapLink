@@ -6,6 +6,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from '../../../../environments/environment';
 import { NotificationService } from '../../../cors/services/notification.service';
+import { SocialService } from '../../../cors/services/Social.services';
 
 @Component({
   selector: 'app-topbar',
@@ -19,7 +20,8 @@ export class TopbarComponent implements OnInit {
   constructor(
     private searchService: SearchService,
     private router: Router,
-    public notificationService: NotificationService
+    public notificationService: NotificationService,
+    private socialService: SocialService
   ) { }
 
   @Output() toggle = new EventEmitter<void>();
@@ -32,6 +34,7 @@ export class TopbarComponent implements OnInit {
   isLoading: boolean = false;
 
   isNotificationDropdownOpen: boolean = false;
+  pendingRequests: any[] = [];
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
@@ -43,6 +46,46 @@ export class TopbarComponent implements OnInit {
 
   toggleNotificationDropdown() {
     this.isNotificationDropdownOpen = !this.isNotificationDropdownOpen;
+    if (this.isNotificationDropdownOpen) {
+      this.fetchPendingRequests();
+    }
+  }
+
+  fetchPendingRequests() {
+    this.socialService.getPendingRequests().subscribe({
+      next: (res: any) => {
+        this.pendingRequests = res.Notification || [];
+      },
+      error: (err) => {
+        console.error("Error fetching pending requests", err);
+      }
+    });
+  }
+
+  acceptRequest(request: any) {
+    this.socialService.acceptFollowRequest(request._id).subscribe({
+      next: (res) => {
+        this.notificationService.show('Follow request accepted', undefined, 'success');
+        this.pendingRequests = this.pendingRequests.filter(req => req._id !== request._id);
+      },
+      error: (err) => {
+        console.error("Error accepting request", err);
+        this.notificationService.show('Failed to accept request', undefined, 'error');
+      }
+    });
+  }
+
+  rejectRequest(request: any) {
+    this.socialService.rejectFollowRequest(request._id).subscribe({
+      next: (res) => {
+        this.notificationService.show('Follow request rejected', undefined, 'info');
+        this.pendingRequests = this.pendingRequests.filter(req => req._id !== request._id);
+      },
+      error: (err) => {
+        console.error("Error rejecting request", err);
+        this.notificationService.show('Failed to reject request', undefined, 'error');
+      }
+    });
   }
 
   ngOnInit() {

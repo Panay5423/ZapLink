@@ -19,12 +19,14 @@ const projectroutes = require("./Routes/projectRoutes")
 const userRoutes = require("./Routes/user.route");
 const postRoutes = require("./Routes/postRoutes")
 const socialRoutes = require("./Routes/social.routes")
+const chatRoutes = require("./Routes/chat.routes");
 
 
 app.use('/posts', postRoutes);
 app.use('/auth', userRoutes);
 app.use('/action', projectroutes);
 app.use('/social', socialRoutes)
+app.use('/chat', chatRoutes);
 
 
 app.get("/", (req, res) => {

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const ChatModel= new mongoose.Schema(
+const ChatModel = new mongoose.Schema(
   {
     from: {
       type: mongoose.Schema.Types.ObjectId,
@@ -17,8 +17,8 @@ const ChatModel= new mongoose.Schema(
     },
   },
   {
-    timestamps: true, 
+    timestamps: true,
   }
 );
 
-module.exports = mongoose.model("FollowRequest", followRequestSchema);
+module.exports = mongoose.model("ChatModel", ChatModel);
