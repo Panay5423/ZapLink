@@ -36,6 +36,6 @@ export class SocialService {
         return this.http.post(`${this.baseUrl}social/follow/reject/${requestId}`, {}, { headers: this.get_token });
     }
     getfollwers(query: string) {
-        return this.http.post(`${this.baseUrl}social/follow/reject/${query}`, {}, { headers: this.get_token });
+        return this.http.get(`${this.baseUrl}chat/search?query=${query}`, { headers: this.get_token });
     }
 }

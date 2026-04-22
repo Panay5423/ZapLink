@@ -13,11 +13,22 @@
     </div>
 
     <div class="chatbox-body">
-      <div class="empty-chat-state">
-        <i class='bx bx-message-square-dots'></i>
-        <h3>No chats right now</h3>
-        <p>Search for a follower to start a conversation.</p>
+      <div class="users-list" *ngIf="filteredFollowers.length > 0; else noChats">
+        <div class="user-item" *ngFor="let user of filteredFollowers">
+          <img [src]="user.profilePicture || 'assets/default-avatar.png'" alt="avatar" class="avatar" />
+          <div class="user-info">
+            <h4>{{ user.username }}</h4>
+            <p *ngIf="user.chatExists">Chat Exists</p>
+          </div>
+        </div>
       </div>
+      <ng-template #noChats>
+        <div class="empty-chat-state">
+          <i class='bx bx-message-square-dots'></i>
+          <h3>No chats right now</h3>
+          <p>Search for a follower to start a conversation.</p>
+        </div>
+      </ng-template>
     </div>
   </div>
 </div>

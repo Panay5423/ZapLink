@@ -96,15 +96,17 @@
 .chatbox-body {
   flex: 1;
   overflow-y: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   padding: 20px;
 }
 
 .empty-chat-state {
   text-align: center;
   color: #888;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .empty-chat-state i {
@@ -134,4 +136,53 @@
 @keyframes slideInRight {
   from { transform: translateX(100%); }
   to { transform: translateX(0); }
+}
+
+.users-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 15px;
+}
+
+.user-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 10px;
+  border-radius: 8px;
+  background: #1f1f1f;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.user-item:hover {
+  background: #2a2a2a;
+}
+
+.user-item img.avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #333;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.user-info h4 {
+  margin: 0;
+  font-size: 1rem;
+  color: #fff;
+  font-weight: 500;
+}
+
+.user-info p {
+  margin: 5px 0 0;
+  font-size: 0.8rem;
+  color: #00d2ff;
 }
