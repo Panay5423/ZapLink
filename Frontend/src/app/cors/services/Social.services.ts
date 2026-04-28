@@ -39,4 +39,31 @@ export class SocialService {
         console.log("get follwers .............................")
         return this.http.get(`${this.baseUrl}chat/search?query=${query}`, { headers: this.get_token });
     }
+
+    getChatList(): Observable<any> {
+        return this.http.get(`${this.baseUrl}chat/list`, { headers: this.get_token });
+    }
+
+    getMessages(receiverId: string): Observable<any> {
+        return this.http.get(`${this.baseUrl}chat/messages/${receiverId}`, { headers: this.get_token });
+    }
+
+    sendMessage(receiverId: string, text: string): Observable<any> {
+        return this.http.post(`${this.baseUrl}chat/send`, { receiverId, text }, { headers: this.get_token });
+    }
+
+    markAsRead(chatId: string): Observable<any> {
+        return this.http.patch(`${this.baseUrl}chat/read/${chatId}`, {}, { headers: this.get_token });
+    }
+
+    sendImageMessage(receiverId: string, imageFile: File): Observable<any> {
+        const formData = new FormData();
+        formData.append('receiverId', receiverId);
+        formData.append('image', imageFile);
+        return this.http.post(`${this.baseUrl}chat/upload-image`, formData, { headers: this.get_token });
+    }
+
+    deleteMessage(messageId: string): Observable<any> {
+        return this.http.delete(`${this.baseUrl}chat/messages/${messageId}`, { headers: this.get_token });
+    }
 }

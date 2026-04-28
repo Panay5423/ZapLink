@@ -61,6 +61,68 @@ exports.sendMessage = async (req, res) => {
     }
 };
 
+exports.sendImageMessage = async (req, res) => {
+    try {
+        const { receiverId } = req.body;
+        const senderId = req.user ? (req.user.id || req.user._id) : (res.user && (res.user.id || res.user._id));
+
+        if (!receiverId || !req.file) {
+            return res.status(400).json({ message: "Receiver ID and image are required" });
+        }
+
+        const imageUrl = `uploads/${req.file.filename}`;
+
+        const newMessage = new ChatModel({
+            from: senderId,
+            to: receiverId,
+            imageUrl: imageUrl,
+            isRead: false
+        });
+
+        await newMessage.save();
+
+        // Check if chatList exists, if not create one
+        let chatList = await ChatListModel.findOne({
+            members: { $all: [senderId, receiverId] }
+        });
+
+        if (!chatList) {
+            chatList = new ChatListModel({
+                members: [senderId, receiverId],
+                lastMessage: "📷 Image",
+                lastMessageTime: new Date(),
+                unreadCount: 1,
+                lastMessageSender: senderId
+            });
+        } else {
+            chatList.lastMessage = "📷 Image";
+            chatList.lastMessageTime = new Date();
+            chatList.lastMessageSender = senderId;
+            chatList.unreadCount += 1;
+        }
+
+        await chatList.save();
+
+        // Emit via socket
+        try {
+            const { GetIo, OnlineUser } = require("../WebSoket/socket");
+            const io = GetIo();
+            const receiverSocketId = OnlineUser.get(receiverId);
+
+            if (receiverSocketId) {
+                io.to(receiverSocketId).emit("new_message", newMessage);
+            }
+        } catch (socketErr) {
+            console.error("Socket emission error:", socketErr);
+        }
+
+        res.status(201).json(newMessage);
+    } catch (error) {
+        console.error("Error in sendImageMessage:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
+
 exports.getMessages = async (req, res) => {
     try {
         const { receiverId } = req.params;
@@ -91,8 +153,8 @@ exports.getChats = async (req, res) => {
         const chats = await ChatListModel.find({
             members: { $in: [userId] }
         })
-        .populate("members", "username profilePicture")
-        .sort({ updatedAt: -1 });
+            .populate("members", "username profilePicture")
+            .sort({ updatedAt: -1 });
 
         res.status(200).json(chats);
     } catch (error) {
@@ -107,7 +169,7 @@ exports.markAsRead = async (req, res) => {
         const userId = req.user ? (req.user.id || req.user._id) : (res.user && (res.user.id || res.user._id));
 
         const chatList = await ChatListModel.findById(chatId);
-        
+
         if (!chatList) {
             return res.status(404).json({ message: "Chat not found" });
         }
@@ -118,9 +180,67 @@ exports.markAsRead = async (req, res) => {
             await chatList.save();
         }
 
+        // Also mark all individual messages in this chat sent to current user as read
+        const otherMemberId = chatList.members.find(m => m.toString() !== userId.toString());
+        if (otherMemberId) {
+            await ChatModel.updateMany(
+                { from: otherMemberId, to: userId, isRead: { $ne: true } },
+                { $set: { isRead: true } }
+            );
+
+            // Notify the sender that their messages were read
+            try {
+                const { GetIo, OnlineUser } = require("../WebSoket/socket");
+                const io = GetIo();
+                const senderSocketId = OnlineUser.get(otherMemberId.toString());
+
+                if (senderSocketId) {
+                    io.to(senderSocketId).emit("messages_read", { readerId: userId.toString() });
+                }
+            } catch (socketErr) {
+                console.error("Socket emission error on read receipt:", socketErr);
+            }
+        }
+
         res.status(200).json({ message: "Chat marked as read", chatList });
     } catch (error) {
         console.error("Error in markAsRead:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
+
+exports.deleteMessage = async (req, res) => {
+    try {
+        const { messageId } = req.params;
+        const userId = req.user ? (req.user.id || req.user._id) : (res.user && (res.user.id || res.user._id));
+
+        const message = await ChatModel.findById(messageId);
+        if (!message) {
+            return res.status(404).json({ message: "Message not found" });
+        }
+
+        // Only the sender can delete their message
+        if (message.from.toString() !== userId.toString()) {
+            return res.status(403).json({ message: "You can only delete your own messages" });
+        }
+
+        const receiverId = message.to.toString();
+        await ChatModel.findByIdAndDelete(messageId);
+
+        // Emit real-time deletion via socket.io
+        try {
+            const io = GetIo();
+            const receiverSocketId = OnlineUser.get(receiverId);
+            if (receiverSocketId) {
+                io.to(receiverSocketId).emit("message_deleted", { messageId, receiverId });
+            }
+        } catch (socketErr) {
+            console.error("Socket emission error on delete:", socketErr);
+        }
+
+        res.status(200).json({ message: "Message deleted successfully", messageId });
+    } catch (error) {
+        console.error("Error in deleteMessage:", error);
         res.status(500).json({ message: "Internal server error" });
     }
 };

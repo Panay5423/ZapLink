@@ -4,6 +4,8 @@ import { LoginComponent } from './features/auth/login/login.component';
 import { authGuard } from './cors/guards/auth.guard';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
 import { RegisterComponent } from './features/auth/register/register.component';
+import { HomeComponent } from './features/home/home.component';
+
 export const routes: Routes = [
     {
         path: 'auth', component: AuthLayoutComponent, children: [
@@ -17,5 +19,11 @@ export const routes: Routes = [
     },
     {
         path: 'dashboard', component: MainLayoutComponent, canActivate: [authGuard],
+        children: [
+            { path: '', component: HomeComponent }
+        ]
+    },
+    {
+        path: '', redirectTo: '/auth/login', pathMatch: 'full'
     }
 ];

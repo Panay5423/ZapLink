@@ -15,6 +15,13 @@ const ChatModel = new mongoose.Schema(
     text: {
       type: String,
     },
+    imageUrl: {
+      type: String,
+    },
+    isRead: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

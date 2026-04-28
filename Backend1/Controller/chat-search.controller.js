@@ -4,7 +4,11 @@ const userModel = require("../Models/user.model");
 exports.searchUser = async (req, res) => {
     try {
         const query = req.query.query;
-        const currentUserId = res.user.id;
+        const currentUserId = req.user ? (req.user.id || req.user._id) : (res.user && (res.user.id || res.user._id));
+
+        if (!currentUserId) {
+            return res.status(401).json({ message: "Unauthorized" });
+        }
 
         if (!query) {
             return res.status(400).json({ message: "Query is required" });
@@ -12,14 +16,16 @@ exports.searchUser = async (req, res) => {
 
         const currentUser = await userModel
             .findById(currentUserId)
-            .select("followers");
+            .select("followers following");
 
         if (!currentUser) {
             return res.status(404).json({ message: "User not found" });
         }
 
+        const connections = [...new Set([...currentUser.followers, ...currentUser.following])];
+
         const usersFollowers = await userModel.find({
-            _id: { $in: currentUser.followers },
+            _id: { $in: connections },
             username: { $regex: query, $options: "i" }
         }).select("username profilePicture");
 
@@ -36,7 +42,8 @@ exports.searchUser = async (req, res) => {
                 username: user.username,
                 profilePicture: user.profilePicture,
                 chatExists: !!chat,
-                chatId: chat ? chat._id : null
+                chatId: chat ? chat._id : null,
+                chatDetails: chat ? chat : null
             });
         }
 

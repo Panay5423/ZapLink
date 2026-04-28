@@ -1,0 +1,67 @@
+<div class="feed-container">
+  
+  <div class="feed-header">
+    <h2>Home Feed</h2>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-state">
+    <i class='bx bx-loader-alt bx-spin'></i>
+    <p>Loading your feed...</p>
+  </div>
+
+  <div *ngIf="!isLoading && feedPosts.length === 0" class="empty-feed">
+    <i class='bx bx-news'></i>
+    <h3>Your feed is empty</h3>
+    <p>Follow some friends or post something to get started!</p>
+  </div>
+
+  <div class="posts-list" *ngIf="!isLoading && feedPosts.length > 0">
+    <div class="post-card" *ngFor="let post of feedPosts">
+      
+      <!-- Post Header -->
+      <div class="post-header">
+        <div class="post-author-info">
+          <img [src]="getProfileUrl(post.Posted_by)" alt="author profile" class="author-avatar" />
+          <div class="author-meta">
+            <h4>{{ post.Posted_by?.username || 'Unknown User' }}</h4>
+            <span class="post-time">{{ post.Date | date:'medium' }}</span>
+          </div>
+        </div>
+        <button class="more-options-btn"><i class='bx bx-dots-horizontal-rounded'></i></button>
+      </div>
+
+      <!-- Post Content -->
+      <div class="post-content">
+        <p class="post-caption">{{ post.Caption }}</p>
+        
+        <div class="post-media" *ngIf="post.PostImage">
+          <img [src]="getPostImageUrl(post.PostImage)" alt="post media" />
+        </div>
+        
+        <!-- Song Details (if any) -->
+        <div class="post-song" *ngIf="post.song?.title">
+          <i class='bx bxs-music'></i>
+          <span>{{ post.song.title }} - {{ post.song.artist }}</span>
+        </div>
+      </div>
+
+      <!-- Post Actions -->
+      <div class="post-actions">
+        <button class="action-btn" (click)="likePost(post)">
+          <i class='bx bx-heart'></i>
+          <span>Like</span>
+        </button>
+        <button class="action-btn" (click)="commentPost(post)">
+          <i class='bx bx-comment'></i>
+          <span>Comment</span>
+        </button>
+        <button class="action-btn">
+          <i class='bx bx-share'></i>
+          <span>Share</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+</div>

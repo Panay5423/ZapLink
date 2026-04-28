@@ -1,34 +1,124 @@
 <div class="chatbox-overlay" (click)="onClose()">
   <div class="chatbox-content" (click)="$event.stopPropagation()">
     <div class="chatbox-header">
-      <h2>Messages</h2>
+      <h2 *ngIf="!selectedUser">Messages</h2>
+      <div class="chat-header-info" *ngIf="selectedUser">
+        <button class="back-btn" (click)="closeChatWindow()"><i class='bx bx-left-arrow-alt'></i></button>
+        <img [src]="getProfileUrl(selectedUser)" alt="avatar" class="avatar-small" />
+        <span class="chat-username">{{ selectedUser.username }}</span>
+      </div>
       <button class="close-btn" (click)="onClose()"><i class='bx bx-x'></i></button>
     </div>
 
-    <div class="chatbox-search">
-      <div class="search-input-wrapper">
-        <i class='bx bx-search'></i>
-        <input type="text" [(ngModel)]="searchQuery" (input)="onSearch()" placeholder="Search people..." />
+    <!-- MAIN CHAT LIST -->
+    <ng-container *ngIf="!selectedUser">
+      <div class="chatbox-search">
+        <div class="search-input-wrapper">
+          <i class='bx bx-search'></i>
+          <input type="text" [(ngModel)]="searchQuery" (ngModelChange)="onSearch()" placeholder="Search people..." />
+        </div>
       </div>
-    </div>
 
-    <div class="chatbox-body">
-      <div class="users-list" *ngIf="filteredFollowers.length > 0; else noChats">
-        <div class="user-item" *ngFor="let user of filteredFollowers">
-          <img [src]="user.profilePicture || 'assets/default-avatar.png'" alt="avatar" class="avatar" />
-          <div class="user-info">
-            <h4>{{ user.username }}</h4>
-            <p *ngIf="user.chatExists">Chat Exists</p>
+      <div class="chatbox-body">
+        <!-- SEARCH RESULTS -->
+        <div class="users-list" *ngIf="searchQuery.trim().length > 0 && filteredFollowers.length > 0">
+          <div class="user-item" *ngFor="let user of filteredFollowers" (click)="openChatWindow(user.chatDetails || null, user)">
+            <div class="avatar-wrapper">
+              <img [src]="getProfileUrl(user)" alt="avatar" class="avatar" />
+              <span class="online-indicator" *ngIf="onlineUsers.has(user._id)"></span>
+            </div>
+            <div class="user-info">
+              <h4>{{ user.username }}</h4>
+              <p *ngIf="user.chatExists" class="last-message-preview">{{ user.chatDetails?.lastMessage || 'Chat Exists' }}</p>
+              <p *ngIf="!user.chatExists" class="new-chat-preview">Start a new chat</p>
+            </div>
           </div>
         </div>
-      </div>
-      <ng-template #noChats>
-        <div class="empty-chat-state">
-          <i class='bx bx-message-square-dots'></i>
-          <h3>No chats right now</h3>
-          <p>Search for a follower to start a conversation.</p>
+
+        <!-- NO SEARCH RESULTS -->
+        <div class="empty-chat-state" *ngIf="searchQuery.trim().length > 0 && filteredFollowers.length === 0">
+          <p>No connections found matching "{{ searchQuery }}"</p>
         </div>
-      </ng-template>
-    </div>
+
+        <!-- ACTIVE CHATS (when not searching) -->
+        <div class="users-list" *ngIf="searchQuery.trim().length === 0 && activeChats.length > 0">
+          <div class="user-item" *ngFor="let chat of activeChats" (click)="openChatWindow(chat, getOtherMember(chat))">
+            <!-- Get other member -->
+            <ng-container *ngIf="getOtherMember(chat) as otherMember">
+              <div class="avatar-wrapper">
+                <img [src]="getProfileUrl(otherMember)" alt="avatar" class="avatar" />
+                <span class="online-indicator" *ngIf="onlineUsers.has(otherMember._id)"></span>
+              </div>
+              <div class="user-info">
+                <h4>{{ otherMember.username }}</h4>
+                <p class="last-message-preview">{{ chat.lastMessage }}</p>
+              </div>
+              <!-- Unread badge -->
+              <div class="unread-badge" *ngIf="chat.unreadCount > 0 && chat.lastMessageSender !== currentUserId">
+                {{ chat.unreadCount }}
+              </div>
+            </ng-container>
+          </div>
+        </div>
+
+        <!-- NO ACTIVE CHATS AND NOT SEARCHING -->
+        <ng-container *ngIf="searchQuery.trim().length === 0 && activeChats.length === 0">
+          <div class="empty-chat-state">
+            <i class='bx bx-message-square-dots'></i>
+            <h3>No chats right now</h3>
+            <p>Search for a follower to start a conversation.</p>
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+
+    <!-- CHAT WINDOW (Inside Chatbox) -->
+    <ng-container *ngIf="selectedUser">
+      <div class="chat-window-body">
+        <div class="messages-container">
+          <div class="empty-messages-state" *ngIf="messages.length === 0">
+            <p>Start a new conversation with {{ selectedUser.username }}</p>
+          </div>
+          
+          <div class="message-wrapper" *ngFor="let msg of messages" [ngClass]="{'sent': msg.from === currentUserId, 'received': msg.from !== currentUserId}">
+            <div class="message-content-group">
+              <button class="delete-msg-btn" *ngIf="msg.from === currentUserId" (click)="deleteMessage(msg._id)" title="Delete message">
+                <i class='bx bx-trash'></i>
+              </button>
+              <div class="message-bubble" [ngClass]="{'has-image': msg.imageUrl}">
+                <img *ngIf="msg.imageUrl" [src]="getImageUrl(msg.imageUrl)" class="message-image" alt="attachment" />
+                <span *ngIf="msg.text">{{ msg.text }}</span>
+              </div>
+            </div>
+            <div class="message-meta">
+              <span class="message-time">{{ msg.createdAt | date:'shortTime' }}</span>
+              <i *ngIf="msg.from === currentUserId" class='bx bx-check-double read-receipt' [class.is-read]="msg.isRead"></i>
+            </div>
+          </div>
+
+          <!-- Typing Indicator -->
+          <div class="typing-indicator-wrapper" *ngIf="isTyping">
+            <div class="typing-indicator">
+              <span></span><span></span><span></span>
+            </div>
+            <span class="typing-text">{{ selectedUser.username }} is typing...</span>
+          </div>
+        </div>
+        
+        <div class="chat-input-area">
+          <div class="emoji-picker-container" *ngIf="showEmojiPicker">
+            <div class="emoji-picker">
+              <span *ngFor="let emoji of commonEmojis" (click)="addEmoji(emoji)" class="emoji-item">{{ emoji }}</span>
+            </div>
+          </div>
+          <input type="file" id="chatImageUpload" accept="image/*" (change)="onImageUpload($event)" style="display: none;" />
+          <button class="attachment-btn" (click)="triggerImageUpload()" title="Attach image"><i class='bx bx-paperclip'></i></button>
+          <button class="emoji-btn" (click)="toggleEmojiPicker()"><i class='bx bx-smile'></i></button>
+          <input type="text" [(ngModel)]="newMessageText" (input)="onInputTyping()" (keyup.enter)="sendMessage()" placeholder="Type a message..." class="message-input" (focus)="showEmojiPicker = false" />
+          <button class="send-btn" (click)="sendMessage()" [disabled]="!newMessageText.trim()"><i class='bx bx-send'></i></button>
+        </div>
+      </div>
+    </ng-container>
+
   </div>
 </div>

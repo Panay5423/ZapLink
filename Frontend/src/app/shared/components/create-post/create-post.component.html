@@ -29,7 +29,7 @@
 
     <div class="modal-footer">
       <button class="btn btn-secondary" (click)="onClose()">Cancel</button>
-      <button class="btn btn-primary" (click)="submitPost()" [disabled]="!postImageFile || isSubmitting">
+      <button class="btn btn-primary" (click)="submitPost()" [disabled]="isSubmitting">
         <span *ngIf="!isSubmitting">Post</span>
         <span *ngIf="isSubmitting"><i class='bx bx-loader-alt bx-spin'></i> Posting...</span>
       </button>

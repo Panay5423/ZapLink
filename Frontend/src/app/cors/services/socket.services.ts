@@ -36,4 +36,7 @@ export class SocketService {
 
     }
 
+    getSocket(): Socket {
+        return this.socket;
+    }
 }

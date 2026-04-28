@@ -25,6 +25,11 @@ export class TopbarComponent implements OnInit {
   ) { }
 
   @Output() toggle = new EventEmitter<void>();
+  @Output() openCreatePost = new EventEmitter<void>();
+
+  onAddPost() {
+    this.openCreatePost.emit();
+  }
 
   isDark: boolean = false;
   query = new FormControl('');

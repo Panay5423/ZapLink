@@ -54,20 +54,25 @@ export class CreatePostComponent implements OnInit {
     const formData = new FormData();
     formData.append('Caption', this.caption);
     formData.append('PostImage', this.postImageFile);
-    formData.append('Posted_by', this.UID);
+    // backend now uses req.user.id, but we can still append it if we want
+    // formData.append('Posted_by', this.UID);
 
     const baseUrl = environment.BaseAPiURL.endsWith('/') ? environment.BaseAPiURL.slice(0, -1) : environment.BaseAPiURL;
+    const token = localStorage.getItem('zaplink_token') || localStorage.getItem('token');
+    const headers = { 'Authorization': `Bearer ${token}` };
 
-    this.http.post(`${baseUrl}/post/new`, formData).subscribe({
+    this.http.post(`${baseUrl}/posts/new`, formData, { headers }).subscribe({
       next: (res) => {
         this.isSubmitting = false;
         this.postCreated.emit();
         this.onClose();
+        // Refresh page to show the new post in the feed instantly
+        window.location.reload();
       },
       error: (err) => {
         console.error("Error creating post", err);
         this.isSubmitting = false;
-        alert("Failed to create post. See console for details.");
+        alert(`Failed to create post. ${err.error?.message || err.message}`);
       }
     });
   }

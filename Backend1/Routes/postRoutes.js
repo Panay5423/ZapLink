@@ -20,6 +20,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 PostRoutes.get('/my-posts', authMiddleware, postController.getUserPosts);
-PostRoutes.post('/new', upload.single('PostImage'), postController.NewPost);
+PostRoutes.get('/feed', authMiddleware, postController.getHomeFeed);
+PostRoutes.post('/new', authMiddleware, upload.single('PostImage'), postController.NewPost);
 
 module.exports = PostRoutes;
