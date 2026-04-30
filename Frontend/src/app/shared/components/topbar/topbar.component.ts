@@ -174,9 +174,11 @@ export class TopbarComponent implements OnInit {
     if (this.isDark) {
       document.body.classList.add('dark');
       localStorage.setItem('theme', 'dark');
+      console.log("dark theme selected")
     } else {
       document.body.classList.remove('dark');
       localStorage.setItem('theme', 'light');
+      console.log("light theme selected")
     }
   }
 }
