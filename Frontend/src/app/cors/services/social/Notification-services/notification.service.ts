@@ -23,11 +23,13 @@ export class NotificationService {
 
   show(message: string, from?: string, type: AppNotification['type'] = 'info') {
     const id = Math.random().toString(36).substring(2, 11);
+
     const newNotification: AppNotification = { id, message, from, type, timestamp: new Date() };
+
     this.notificationsSignal.update(state => [newNotification, ...state]);
     this.historySignal.update(state => [newNotification, ...state]);
 
-
+    // Auto-remove after 5 seconds from the toast popup, but keep it in history window
     setTimeout(() => {
       this.remove(id);
     }, 5000);

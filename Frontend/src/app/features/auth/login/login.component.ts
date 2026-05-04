@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { LoginForm } from '../../../cors/model/user.model';
 import { FormsModule } from '@angular/forms';
-import { AuthService } from '../../../cors/services/auth.services';
+import { AuthService } from '../../../cors/services/auth/auth.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 

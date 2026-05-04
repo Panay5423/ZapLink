@@ -1,13 +1,13 @@
 import { Injectable } from "@angular/core";
 import { io, Socket } from "socket.io-client";
-import { environment } from "../../../environments/environment";
-import { NotificationService } from "./notification.service";
+import { environment } from "../../../../environments/environment";
+import { NotificationService } from "../social/Notification-services/notification.service";
 
 @Injectable({ providedIn: 'root' })
 export class SocketService {
     private baseUrl = environment.BaseAPiURL;
     private socket!: Socket;
-    
+
     constructor(private notificationService: NotificationService) { }
 
     SocketConnetion(userId: string) {

@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Output, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SearchService } from '../../../cors/services/Search.Service';
+import { SearchService } from '../../../cors/services/search/search.service';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from '../../../../environments/environment';
-import { NotificationService } from '../../../cors/services/notification.service';
-import { SocialService } from '../../../cors/services/Social.services';
+import { NotificationService } from '../../../cors/services/social/Notification-services/notification.service';
+import { SocialService } from '../../../cors/services/social/social.service';
 
 @Component({
   selector: 'app-topbar',

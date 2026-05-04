@@ -66,4 +66,8 @@ export class SocialService {
     deleteMessage(messageId: string): Observable<any> {
         return this.http.delete(`${this.baseUrl}chat/messages/${messageId}`, { headers: this.get_token });
     }
+
+    getfriends(): Observable<any> {
+        return this.http.get(`${this.baseUrl}social/getFriends`, { headers: this.get_token });
+    }
 }

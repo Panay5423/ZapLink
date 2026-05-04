@@ -3,14 +3,14 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet, Router } from '@angular/router';
 import { SidebarComponent } from '../../shared/components/sidebar/sidebar.component';
 import { TopbarComponent } from '../../shared/components/topbar/topbar.component';
-import { SearchService } from '../../cors/services/Search.Service';
+import { SearchService } from '../../cors/services/search/search.service';
 import { CreatePostComponent } from '../../shared/components/create-post/create-post.component';
 import { ChatboxComponent } from '../../shared/components/chatbox/chatbox.component';
 import { ActivatedRoute } from '@angular/router';
 import { __param } from 'tslib';
 import { environment } from '../../../environments/environment';
-import { SocialService } from '../../cors/services/Social.services';
-import { SocketService } from '../../cors/services/socket.services';
+import { SocialService } from '../../cors/services/social/social.service';
+import { SocketService } from '../../cors/services/socket/socket.service';
 
 @Component({
   selector: 'app-main-layout',

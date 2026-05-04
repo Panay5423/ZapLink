@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Output, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { SocialService } from '../../../cors/services/Social.services';
-import { SocketService } from '../../../cors/services/socket.services';
+import { SocialService } from '../../../cors/services/social/social.service';
+import { SocketService } from '../../../cors/services/socket/socket.service';
 import { environment } from '../../../../environments/environment';
 
 @Component({
