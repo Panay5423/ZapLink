@@ -1,9 +1,6 @@
 const nodemailer = require("nodemailer");
 const UserModel = require("../Models/user.model");
-
 const jwt = require("jsonwebtoken");
-const { Error } = require("mongoose");
-const { errorMonitor } = require("nodemailer/lib/xoauth2");
 const userModel = require("../Models/user.model");
 const validator = require("validator");
 
