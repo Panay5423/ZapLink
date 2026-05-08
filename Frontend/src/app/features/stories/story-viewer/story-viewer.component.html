@@ -1,0 +1,33 @@
+<div class="story-viewer-overlay">
+  <div class="story-viewer-container" *ngIf="getCurrentGroup() && getCurrentStory()">
+    
+    <!-- Progress Bars -->
+    <div class="progress-container">
+      <div class="progress-bar-wrapper" *ngFor="let story of getCurrentGroup().stories; let i = index">
+        <div class="progress-fill" 
+             [style.width.%]="i < currentStoryIndex ? 100 : (i === currentStoryIndex ? progressValue : 0)">
+        </div>
+      </div>
+    </div>
+
+    <!-- Header info -->
+    <div class="story-header">
+      <div class="user-info">
+        <img [src]="getProfileUrl(getCurrentGroup().user)" alt="avatar" />
+        <span class="username">{{ getCurrentGroup().user?.username }}</span>
+        <span class="time">{{ getCurrentStory().createdAt | date:'shortTime' }}</span>
+      </div>
+      <button class="close-btn" (click)="close()"><i class='bx bx-x'></i></button>
+    </div>
+
+    <!-- Image -->
+    <div class="story-image-container">
+      <img [src]="getStoryImageUrl(getCurrentStory().mediaPath)" class="story-image" />
+    </div>
+
+    <!-- Navigation Tap Areas -->
+    <div class="tap-area tap-left" (click)="prevStory()"></div>
+    <div class="tap-area tap-right" (click)="nextStory()"></div>
+
+  </div>
+</div>

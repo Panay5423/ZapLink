@@ -4,6 +4,8 @@
     <h2>Home Feed</h2>
   </div>
 
+  <app-stories-bar></app-stories-bar>
+
   <div *ngIf="isLoading" class="loading-state">
     <i class='bx bx-loader-alt bx-spin'></i>
     <p>Loading your feed...</p>
@@ -47,18 +49,44 @@
 
       <!-- Post Actions -->
       <div class="post-actions">
-        <button class="action-btn" (click)="likePost(post)">
-          <i class='bx bx-heart'></i>
-          <span>Like</span>
+        <button class="action-btn" (click)="likePost(post)" [ngClass]="{'liked': post.hasLiked}">
+          <i class='bx' [ngClass]="post.hasLiked ? 'bxs-heart text-red-500' : 'bx-heart'"></i>
+          <span>{{ post.likesCount || 0 }} Like{{ post.likesCount !== 1 ? 's' : '' }}</span>
         </button>
         <button class="action-btn" (click)="commentPost(post)">
           <i class='bx bx-comment'></i>
-          <span>Comment</span>
+          <span>{{ post.commentsCount || 0 }} Comment{{ post.commentsCount !== 1 ? 's' : '' }}</span>
         </button>
         <button class="action-btn">
           <i class='bx bx-share'></i>
           <span>Share</span>
         </button>
+      </div>
+
+      <!-- Comment Section -->
+      <div class="comment-section" *ngIf="post.showCommentBox" style="margin-top: 15px; border-top: 1px solid #eee; padding-top: 15px;">
+        
+        <!-- Comment Input -->
+        <div class="comment-input-area" style="display: flex; gap: 10px; margin-bottom: 15px;">
+          <input type="text" #commentInput placeholder="Write a comment..." class="comment-input" style="flex: 1; padding: 10px; border-radius: 20px; border: 1px solid #ccc; outline: none;" (keyup.enter)="submitComment(post, commentInput)" />
+          <button (click)="submitComment(post, commentInput)" style="background: var(--primary-color, #1877f2); color: white; border: none; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-weight: bold;">Post</button>
+        </div>
+
+        <!-- Comments List -->
+        <div class="comments-list" *ngIf="post.commentsLoaded">
+          <div *ngIf="!post.commentsList?.length" style="color: #666; font-size: 0.9em; text-align: center;">No comments yet. Be the first!</div>
+          <div *ngFor="let comment of post.commentsList" class="comment-item" style="display: flex; gap: 10px; margin-bottom: 15px;">
+            <img [src]="getProfileUrl(comment.CommentBy)" alt="user" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover;" />
+            <div class="comment-body" style="background: #f0f2f5; padding: 8px 12px; border-radius: 18px;">
+              <h5 style="margin: 0; font-size: 0.9em; color: #333;">{{ comment.CommentBy?.username || 'User' }}</h5>
+              <p style="margin: 2px 0 0 0; font-size: 0.9em; color: #555;">{{ comment.comment }}</p>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="!post.commentsLoaded" style="text-align: center; color: #666; font-size: 0.9em;">
+          <i class='bx bx-loader-alt bx-spin'></i> Loading comments...
+        </div>
+
       </div>
 
     </div>

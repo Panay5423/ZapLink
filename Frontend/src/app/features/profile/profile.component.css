@@ -1,0 +1,231 @@
+.profile-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  }
+  
+  .profile-banner {
+    width: 100%;
+    height: 200px;
+    background: #e9ecef;
+  }
+  
+  .profile-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .profile-header {
+    position: relative;
+    padding: 20px;
+    text-align: center;
+    margin-top: -60px;
+  }
+  
+  .avatar-container {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 15px;
+    border-radius: 50%;
+    border: 4px solid #fff;
+    overflow: hidden;
+    background: #fff;
+  }
+  
+  .profile-avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .profile-details h2 {
+    margin: 0 0 5px;
+    font-size: 1.5rem;
+    color: #333;
+  }
+  
+  .badge {
+    font-size: 0.8rem;
+    background: #f1f3f5;
+    padding: 3px 8px;
+    border-radius: 12px;
+    color: #666;
+    vertical-align: middle;
+  }
+  
+  .bio {
+    color: #555;
+    margin-bottom: 20px;
+  }
+  
+  .profile-stats {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 20px;
+  }
+  
+  .stat {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .stat-count {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #222;
+  }
+  
+  .stat-label {
+    font-size: 0.9rem;
+    color: #777;
+  }
+  
+  .profile-actions {
+    margin-bottom: 20px;
+  }
+  
+  .btn {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s;
+  }
+  
+  .btn-primary {
+    background: #1877f2;
+    color: #fff;
+  }
+  
+  .btn-primary:hover {
+    background: #166fe5;
+  }
+  
+  .btn-secondary {
+    background: #e4e6eb;
+    color: #333;
+  }
+  
+  .btn-secondary:hover {
+    background: #d8dadf;
+  }
+  
+  .btn-success {
+    background: #28a745;
+    color: #fff;
+    margin-top: 10px;
+  }
+  
+  .edit-profile-section {
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin: 0 20px 20px;
+    text-align: left;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #444;
+  }
+  
+  .form-group textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    resize: vertical;
+  }
+  
+  .divider {
+    border: none;
+    border-top: 1px solid #eee;
+    margin: 0;
+  }
+  
+  .profile-posts {
+    padding: 20px;
+  }
+  
+  .profile-posts h3 {
+    margin-top: 0;
+    color: #333;
+  }
+  
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+  }
+  
+  .post-item {
+    width: 100%;
+    aspect-ratio: 1;
+    background: #f0f2f5;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .post-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  
+  .post-item:hover img {
+    transform: scale(1.05);
+  }
+  
+  .post-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    text-align: center;
+    color: #555;
+    font-size: 0.9em;
+  }
+  
+  .empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: #888;
+  }
+  
+  .empty-state i {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    color: #ccc;
+  }
+  
+  .loading-state {
+    text-align: center;
+    padding: 50px;
+    color: #666;
+  }
+  
+  .loading-state i {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }

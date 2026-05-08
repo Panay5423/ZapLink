@@ -16,12 +16,12 @@ export class SearchService {
 
     search(query: string): Observable<any> {
         console.log("search service", query)
-        return this.http.get(`${this.baseUrl}action/search_user?query=${query}`)
+        return this.http.get(`${this.baseUrl}search/users?query=${query}`)
 
     }
     GetUserprofile(id: String): Observable<any> {
         console.log("get user profile service", id)
-        return this.http.get(`${this.baseUrl}action/view_user/${id}`
+        return this.http.get(`${this.baseUrl}users/${id}`
             , { headers: this.get_token }
         )
 

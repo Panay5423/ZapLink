@@ -25,6 +25,11 @@ const UserDataSchema = new mongoose.Schema({
         ref: "User",
         default: []
     }],
+    blockedUsers: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        default: []
+    }],
 
     profilePicture: { type: String, default: "defaultprofile.png" },
     BannerPicture: { type: String, default: "_banner-default.jpg" },

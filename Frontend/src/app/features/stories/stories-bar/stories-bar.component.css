@@ -1,0 +1,77 @@
+.stories-wrapper {
+    display: flex;
+    gap: 15px;
+    padding: 15px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+    overflow-x: auto;
+    scrollbar-width: none; /* Firefox */
+  }
+  
+  .stories-wrapper::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+  }
+  
+  .story-circle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    min-width: 70px;
+  }
+  
+  .avatar-ring {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    position: relative;
+    padding: 3px;
+    background: #e4e6eb; /* Default ring */
+  }
+  
+  .avatar-ring.has-story {
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  }
+  
+  .avatar-ring img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #fff; /* Space between ring and image */
+    background: #fff;
+  }
+  
+  .story-username {
+    font-size: 0.75em;
+    color: #444;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 70px;
+    text-align: center;
+  }
+  
+  .plus-icon {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: #1877f2;
+    color: white;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #fff;
+    font-size: 0.8em;
+  }
+  
+  .story-circle:hover .avatar-ring {
+    transform: scale(1.05);
+    transition: transform 0.2s;
+  }

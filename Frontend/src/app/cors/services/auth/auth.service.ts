@@ -14,7 +14,7 @@ export class AuthService {
     }
     getUser(): Observable<any> {
         console.log("getUser");
-        return this.http.get(`${this.baseUrl}auth/getUser`)
+        return this.http.get(`${this.baseUrl}users/me`)
     }
 
     register(formdata: any): Observable<any> {
@@ -22,5 +22,11 @@ export class AuthService {
     }
     verify(formdata: any): Observable<any> {
         return this.http.post(`${this.baseUrl}auth/verify`, formdata)
+    }
+
+    updateProfile(formData: FormData): Observable<any> {
+        const token = localStorage.getItem('zaplink_token') || localStorage.getItem('token');
+        const headers = { 'Authorization': `Bearer ${token}` };
+        return this.http.patch(`${this.baseUrl}users/me`, formData, { headers });
     }
 }

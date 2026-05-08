@@ -60,9 +60,20 @@ export class TopbarComponent implements OnInit {
     this.socialService.getPendingRequests().subscribe({
       next: (res: any) => {
         this.pendingRequests = res.Notification || [];
+        
+        if (res.ActivityNotifications && res.ActivityNotifications.length > 0) {
+          const mappedHistory = res.ActivityNotifications.map((notif: any) => ({
+            id: notif._id,
+            message: notif.message,
+            from: notif.sender, // Pass the full populated sender object
+            type: 'info',
+            timestamp: new Date(notif.createdAt)
+          }));
+          this.notificationService.setHistory(mappedHistory);
+        }
       },
       error: (err) => {
-        console.error("Error fetching pending requests", err);
+        console.error("Error fetching notifications", err);
       }
     });
   }
@@ -94,6 +105,8 @@ export class TopbarComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.fetchPendingRequests(); // Fetch notifications on load to populate history
+
     this.isDark = localStorage.getItem('theme') === 'dark';
     if (this.isDark) {
       document.body.classList.add('dark');
@@ -156,7 +169,10 @@ export class TopbarComponent implements OnInit {
     if (pic) {
       if (pic.startsWith('http')) return pic;
 
-      const baseUrl = environment.BaseAPiURL.endsWith('/') ? environment.BaseAPiURL.slice(0, -1) : environment.BaseAPiURL;
+      let hostUrl = environment.BaseAPiURL;
+      if (hostUrl.endsWith('/api/')) hostUrl = hostUrl.replace('/api/', '');
+      else if (hostUrl.endsWith('/api')) hostUrl = hostUrl.replace('/api', '');
+      else if (hostUrl.endsWith('/')) hostUrl = hostUrl.slice(0, -1);
 
       let path = pic;
       if (!path.includes('uploads/')) {
@@ -164,7 +180,7 @@ export class TopbarComponent implements OnInit {
       }
       path = path.startsWith('/') ? path : `/${path}`;
 
-      return `${baseUrl}${path}`;
+      return `${hostUrl}${path}`;
     }
     return `https://ui-avatars.com/api/?name=${user.username || user.name || 'User'}&background=random`;
   }

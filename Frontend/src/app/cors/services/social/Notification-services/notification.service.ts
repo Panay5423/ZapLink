@@ -3,7 +3,7 @@ import { Injectable, signal } from '@angular/core';
 export interface AppNotification {
   id: string;
   message: string;
-  from?: string;
+  from?: any;
   type: 'info' | 'success' | 'warning' | 'error';
   timestamp: Date;
 }
@@ -41,5 +41,9 @@ export class NotificationService {
 
   clearHistory() {
     this.historySignal.set([]);
+  }
+
+  setHistory(notifications: AppNotification[]) {
+    this.historySignal.set(notifications);
   }
 }

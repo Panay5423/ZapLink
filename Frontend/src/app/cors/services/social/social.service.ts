@@ -1,7 +1,8 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { environment } from "../../../environments/environment";
+import { environment } from "../../../../environments/environment";
+
 
 @Injectable({ providedIn: 'root' })
 export class SocialService {
@@ -17,23 +18,23 @@ export class SocialService {
 
     follow(id: string): Observable<any> {
         console.log("follow service id", id)
-        return this.http.post(`${this.baseUrl}social/follow/${id}`, {}, { headers: this.get_token })
+        return this.http.post(`${this.baseUrl}follow/${id}`, {}, { headers: this.get_token })
     }
     unfollow(id: string): Observable<any> {
         console.log("unfollow service id", id)
-        return this.http.post(`${this.baseUrl}social/unfollow/${id}`, {}, { headers: this.get_token })
+        return this.http.delete(`${this.baseUrl}follow/${id}`, { headers: this.get_token })
     }
 
     getPendingRequests(): Observable<any> {
-        return this.http.get(`${this.baseUrl}social/notification`, { headers: this.get_token });
+        return this.http.get(`${this.baseUrl}notifications/`, { headers: this.get_token });
     }
 
     acceptFollowRequest(requestId: string): Observable<any> {
-        return this.http.post(`${this.baseUrl}social/follow/accept/${requestId}`, {}, { headers: this.get_token });
+        return this.http.post(`${this.baseUrl}follow/accept/${requestId}`, {}, { headers: this.get_token });
     }
 
     rejectFollowRequest(requestId: string): Observable<any> {
-        return this.http.post(`${this.baseUrl}social/follow/reject/${requestId}`, {}, { headers: this.get_token });
+        return this.http.post(`${this.baseUrl}follow/reject/${requestId}`, {}, { headers: this.get_token });
     }
     getfollwers(query: string) {
         console.log("get follwers .............................")
@@ -67,7 +68,15 @@ export class SocialService {
         return this.http.delete(`${this.baseUrl}chat/messages/${messageId}`, { headers: this.get_token });
     }
 
-    getfriends(): Observable<any> {
-        return this.http.get(`${this.baseUrl}social/getFriends`, { headers: this.get_token });
+    getFollowers(): Observable<any> {
+        return this.http.get(`${this.baseUrl}follow/followers`, { headers: this.get_token });
+    }
+
+    removeFollower(id: string): Observable<any> {
+        return this.http.post(`${this.baseUrl}follow/remove-follower/${id}`, {}, { headers: this.get_token });
+    }
+
+    blockUser(id: string): Observable<any> {
+        return this.http.post(`${this.baseUrl}follow/block/${id}`, {}, { headers: this.get_token });
     }
 }

@@ -1,0 +1,30 @@
+<div class="stories-wrapper">
+  
+  <input type="file" id="storyUploadInput" style="display: none;" accept="image/*" (change)="onStorySelect($event)" />
+
+  <!-- Add Story (Current User) -->
+  <div class="story-circle add-story" (click)="triggerUpload()">
+    <div class="avatar-ring">
+      <img [src]="getProfileUrl(currentUser)" alt="Your Story" />
+      <div class="plus-icon"><i class='bx bx-plus'></i></div>
+    </div>
+    <span class="story-username">Your Story</span>
+  </div>
+
+  <!-- Other Users' Stories -->
+  <div class="story-circle active-story" *ngFor="let group of groupedStories; let i = index" (click)="openViewer(i)">
+    <div class="avatar-ring has-story">
+      <img [src]="getProfileUrl(group.user)" [alt]="group.user?.username" />
+    </div>
+    <span class="story-username">{{ group.user?._id === currentUser?._id ? 'You' : group.user?.username }}</span>
+  </div>
+
+</div>
+
+<!-- The Fullscreen Viewer Overlay -->
+<app-story-viewer 
+    *ngIf="isViewerOpen" 
+    [storyGroups]="groupedStories" 
+    [initialGroupIndex]="activeStoryGroupIndex"
+    (closeViewer)="closeViewer()">
+</app-story-viewer>

@@ -1,0 +1,41 @@
+<div class="followers-container">
+  <div class="followers-header">
+    <h2>Your Followers</h2>
+    <p>Manage the people who follow your account.</p>
+  </div>
+
+  <div class="loading-state" *ngIf="isLoading">
+    <i class='bx bx-loader-alt bx-spin'></i>
+    <p>Loading followers...</p>
+  </div>
+
+  <div class="followers-list" *ngIf="!isLoading">
+    <div class="empty-state" *ngIf="followers.length === 0">
+      <i class='bx bx-user-x'></i>
+      <p>You don't have any followers yet.</p>
+    </div>
+
+    <div class="follower-card" *ngFor="let follower of followers">
+      <div class="follower-info">
+        <img [src]="getProfileUrl(follower)" alt="Avatar" class="follower-avatar" />
+        <div class="follower-details">
+          <h4>{{ follower.username }}</h4>
+          <p>{{ follower.firstName }} {{ follower.lastName }}</p>
+          <span class="mutual-badge" *ngIf="follower.isFollowingBack">Mutuals</span>
+        </div>
+      </div>
+
+      <div class="follower-actions">
+        <button class="action-btn chat-btn" (click)="chatWithUser(follower)" title="Message">
+          <i class='bx bx-message-rounded-dots'></i>
+        </button>
+        <button class="action-btn remove-btn" (click)="removeFollower(follower._id)" title="Remove Follower">
+          Remove
+        </button>
+        <button class="action-btn block-btn" (click)="blockUser(follower._id)" title="Block User">
+          <i class='bx bx-block'></i> Block
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -77,13 +77,18 @@
                         <h4 class="section-title" style="font-size: 12px; text-transform: uppercase; margin: 10px 0 5px 15px; color: var(--text-muted);">Earlier</h4>
                         <div class="notif-item" *ngFor="let notif of notificationService.history()">
                             <div class="notif-icon-small">
-                                <i class='bx bx-info-circle'></i>
+                                <img *ngIf="notif.from?.profilePicture || notif.from?.avatar; else infoIcon" 
+                                     [src]="getProfileUrl(notif.from)" 
+                                     alt="avatar" 
+                                     style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover;">
+                                <ng-template #infoIcon>
+                                    <i class='bx bx-info-circle'></i>
+                                </ng-template>
                             </div>
                             <div class="notif-info">
                                 <p class="notif-text">{{ notif.message }}</p>
                                 <span class="notif-meta">
                                     <span class="notif-time">{{ notif.timestamp | date:'shortTime' }}</span>
-                                    <span class="notif-uid" *ngIf="notif.from">&bull; UID: {{ notif.from | slice:0:10 }}</span>
                                 </span>
                             </div>
                         </div>

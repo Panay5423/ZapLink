@@ -1,0 +1,85 @@
+<div class="profile-container" *ngIf="!isLoading && profileData">
+  
+  <!-- Banner -->
+  <div class="profile-banner">
+    <img [src]="getBannerUrl(profileData.BannerPicture)" alt="Profile Banner" />
+  </div>
+
+  <!-- Profile Info Header -->
+  <div class="profile-header">
+    <div class="avatar-container">
+      <img [src]="getProfileUrl(profileData)" alt="Avatar" class="profile-avatar" />
+    </div>
+
+    <div class="profile-details">
+      <h2>{{ profileData.username }} <span class="badge" *ngIf="profileData.IsPrivate">🔒 Private</span></h2>
+      <p class="bio">{{ profileData.bio || 'No bio yet.' }}</p>
+      
+      <div class="profile-stats">
+        <div class="stat">
+          <span class="stat-count">{{ profileData.posts?.length || 0 }}</span>
+          <span class="stat-label">Posts</span>
+        </div>
+        <div class="stat">
+          <span class="stat-count">{{ profileData.followers || 0 }}</span>
+          <span class="stat-label">Followers</span>
+        </div>
+        <div class="stat">
+          <span class="stat-count">{{ profileData.followings || 0 }}</span>
+          <span class="stat-label">Following</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="profile-actions">
+      <button class="btn btn-primary" *ngIf="isOwnProfile && !isEditing" (click)="toggleEdit()">Edit Profile</button>
+      <button class="btn btn-secondary" *ngIf="isOwnProfile && isEditing" (click)="toggleEdit()">Cancel Edit</button>
+      <button class="btn btn-primary" *ngIf="!isOwnProfile">Follow</button>
+    </div>
+  </div>
+
+  <!-- Edit Profile Modal / Section -->
+  <div class="edit-profile-section" *ngIf="isEditing">
+    <h3>Edit Your Profile</h3>
+    <div class="form-group">
+      <label>Bio</label>
+      <textarea [(ngModel)]="editBio" placeholder="Tell us about yourself..."></textarea>
+    </div>
+    <div class="form-group">
+      <label>Profile Picture</label>
+      <input type="file" (change)="onAvatarSelect($event)" accept="image/*" />
+    </div>
+    <div class="form-group">
+      <label>Banner Picture</label>
+      <input type="file" (change)="onBannerSelect($event)" accept="image/*" />
+    </div>
+    <button class="btn btn-success" (click)="saveProfile()">Save Changes</button>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- Posts Grid -->
+  <div class="profile-posts">
+    <h3>Posts</h3>
+    <div class="posts-grid" *ngIf="profileData.posts && profileData.posts.length > 0; else noPosts">
+      <div class="post-item" *ngFor="let post of profileData.posts">
+        <img [src]="getPostImageUrl(post.PostImage)" alt="Post" *ngIf="post.PostImage" />
+        <div class="post-overlay" *ngIf="!post.PostImage">
+          <p>{{ post.Caption }}</p>
+        </div>
+      </div>
+    </div>
+    <ng-template #noPosts>
+      <div class="empty-state">
+        <i class='bx bx-camera'></i>
+        <p>No posts yet.</p>
+      </div>
+    </ng-template>
+  </div>
+
+</div>
+
+<div class="loading-state" *ngIf="isLoading">
+  <i class='bx bx-loader-alt bx-spin'></i>
+  <p>Loading profile...</p>
+</div>
