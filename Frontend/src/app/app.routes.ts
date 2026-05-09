@@ -32,3 +32,4 @@ export const routes: Routes = [
         path: '', redirectTo: '/auth/login', pathMatch: 'full'
     }
 ];
+// End of routes
