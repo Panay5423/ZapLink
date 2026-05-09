@@ -29,4 +29,3 @@ export class SearchService {
 }
 
 
-//action/view_user/:id
