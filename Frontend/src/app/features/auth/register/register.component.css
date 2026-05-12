@@ -790,3 +790,50 @@ button {
     border-color: #6366f1;
     color: white;
 }
+/* --- CLEAN RED TOAST --- */
+.custom-toast {
+  position: fixed;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10000;
+  background: #c54e4e;
+  color: #f8f8f8;
+  border: 1px solid #000000;
+  padding: 16px 30px;
+  border-radius: 12px;
+  min-width: 280px;
+  text-align: center;
+  box-shadow: 0 4px 6px -1px rgba(220, 38, 38, 0.1), 0 2px 4px -1px rgba(220, 38, 38, 0.06);
+  animation: smoothSlideIn 0.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+  overflow: hidden;
+  font-family: "Inter", sans-serif;
+}
+.toast-msg {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+.progress-track {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: transparent;
+}
+.progress-fill {
+  height: 100%;
+  background: #ffffff;
+  width: 100%;
+  animation: timer 3s linear forwards;
+}
+@keyframes smoothSlideIn {
+  from { top: -60px; opacity: 0; transform: translateX(-50%) scale(0.95); }
+  to { top: 30px; opacity: 1; transform: translateX(-50%) scale(1); }
+}
+@keyframes timer {
+  from { width: 100%; }
+  to { width: 0%; }
+}
+

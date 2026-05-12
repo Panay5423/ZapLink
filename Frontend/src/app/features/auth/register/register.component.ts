@@ -19,6 +19,8 @@ export class RegisterComponent {
   emial: string = '';
   showVerify: boolean = false;
   isDarkMode: boolean = false;
+  showError: boolean = false;
+  errorMessage: string = '';
 
   toggleTheme() {
     this.isDarkMode = !this.isDarkMode;
@@ -111,6 +113,11 @@ export class RegisterComponent {
       },
       error: (err) => {
         console.log(err);
+        this.errorMessage = err.error?.message || 'Registration failed. Please try again.';
+        this.showError = true;
+        setTimeout(() => {
+          this.showError = false;
+        }, 3000);
       }
     })
   }

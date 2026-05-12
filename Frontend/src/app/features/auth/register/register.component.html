@@ -186,3 +186,9 @@
         </form>
     </div>
 </div>
+<div class="custom-toast" *ngIf="showError">
+  <span class="toast-msg">{{ errorMessage }}</span>
+  <div class="progress-track">
+    <div class="progress-fill"></div>
+  </div>
+</div>
