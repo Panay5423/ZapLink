@@ -686,14 +686,14 @@ button {
 }
 
 .dark-mode .right {
-    background: #0f172a;
+    background: #121212;
 }
 .dark-mode .bg-decoration {
-    background-image: radial-gradient(#334155 1px, transparent 1px);
+    background-image: radial-gradient(#333333 1px, transparent 1px);
 }
 .dark-mode .glass-form {
-    background: rgba(30, 41, 59, 0.95);
-    border-color: #334155;
+    background: rgba(20, 20, 20, 0.95);
+    border-color: #333333;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
 }
 .dark-mode .header-box h2 {
@@ -707,8 +707,8 @@ button {
 }
 .dark-mode .field input,
 .dark-mode .field textarea {
-    background: #0f172a;
-    border-color: #334155;
+    background: #121212;
+    border-color: #333333;
     color: #f8fafc;
 }
 .dark-mode .field input:focus,
@@ -722,8 +722,8 @@ button {
     color: #64748b;
 }
 .dark-mode .toggle-card {
-    background: #0f172a;
-    border-color: #334155;
+    background: #121212;
+    border-color: #333333;
 }
 .dark-mode .toggle-card .text span {
     color: #f8fafc;
@@ -732,8 +732,8 @@ button {
     color: #94a3b8;
 }
 .dark-mode .image-preview {
-    background-color: #0f172a;
-    border-color: #334155;
+    background-color: #121212;
+    border-color: #333333;
 }
 .dark-mode .terms span {
     color: #cbd5e1;
@@ -742,19 +742,19 @@ button {
     color: #818cf8;
 }
 .dark-mode .btn-primary {
-    background: #6366f1;
-    color: white;
+    background: #ffffff;
+    color: #000000;
 }
 .dark-mode .btn-primary:hover {
-    background: #818cf8;
-    color: white;
+    background: #e2e8f0;
+    color: #000000;
 }
 .dark-mode .btn-secondary {
-    background: #334155;
+    background: #333333;
     color: #f8fafc;
 }
 .dark-mode .btn-secondary:hover {
-    background: #475569;
+    background: #444444;
 }
 .dark-mode .theme-toggle {
     background: rgba(255, 255, 255, 0.1);
@@ -766,8 +766,8 @@ button {
     background: rgba(255, 255, 255, 0.2);
 }
 .dark-mode .verify-card {
-    background: rgba(30, 41, 59, 0.95);
-    border-color: #334155;
+    background: rgba(20, 20, 20, 0.95);
+    border-color: #333333;
     box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
 }
 .dark-mode .verify-card h2 {
@@ -780,8 +780,8 @@ button {
     color: #94a3b8;
 }
 .dark-mode .otp-input {
-    background: #0f172a;
-    border-color: #334155;
+    background: #121212;
+    border-color: #333333;
     color: #f8fafc;
 }
 .dark-mode .otp-input:focus {
