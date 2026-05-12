@@ -1,4 +1,4 @@
 export const  Production_environment = {
     type: "Production_URL",
-    BaseAPiURL: 'http://******/***' 
+    BaseAPiURL: 'https://zaplink-67dq.onrender.com/api/' 
 }

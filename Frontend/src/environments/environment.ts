@@ -1,4 +1,4 @@
 export const  environment = {
     type: "baseURL",
-    BaseAPiURL: 'http://localhost:3000/api/' 
+    BaseAPiURL: 'https://zaplink-67dq.onrender.com/api/' 
 }
