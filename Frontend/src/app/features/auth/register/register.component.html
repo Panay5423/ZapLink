@@ -62,7 +62,10 @@
                     <input formControlName="email" placeholder="aditya@example.com">
                 </div>
 
-                <button type="button" class="btn-primary" (click)="next()">Continue →</button>
+                <button type="button" class="btn-primary" (click)="next()" style="width: 100%;">Continue →</button>
+                <div style="text-align: center; color: #6b7280; font-size: 14px; margin-top: 16px;">
+                    Already have an account? <a routerLink="/auth/login" style="color: #111827; text-decoration: none; font-weight: 600;">Sign In</a>
+                </div>
             </div>
 
             <div *ngIf="step === 2" class="step-container fade-in">
