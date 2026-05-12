@@ -9,8 +9,8 @@
 /* ================= LEFT PANEL (Bubbles & Brand) ================= */
 .left {
     width: 40%;
-    background: #ffffff;
-    color: #111827;
+    background: #000000;
+    color: #ffffff;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -34,7 +34,7 @@
 .bubble {
     position: absolute;
     border-radius: 50%;
-    background: rgba(0, 0, 0, 0.05);
+    background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(5px);
     animation: float 8s ease-in-out infinite;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
@@ -56,7 +56,7 @@
     bottom: -51px;
     right: -2px;
     animation-duration: 10s;
-    background: rgba(0, 0, 0, 0.05);
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .bubble.four {
@@ -65,7 +65,7 @@
     top: 19%;
     right: 23%;
     animation-duration: 5s;
-    background: rgba(0, 0, 0, 0.05);
+    background: rgba(255, 255, 255, 0.1);
 }
 
 @keyframes float {
@@ -132,7 +132,7 @@
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    border: 1px solid rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     font-size: 12px;
 }
 
