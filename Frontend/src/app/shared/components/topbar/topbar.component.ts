@@ -46,6 +46,7 @@ export class TopbarComponent implements OnInit {
     const targetElement = event.target as HTMLElement;
     if (targetElement && !targetElement.closest('.notification-container')) {
       this.isNotificationDropdownOpen = false;
+      console.log("notification closed")
     }
   }
 
@@ -60,7 +61,7 @@ export class TopbarComponent implements OnInit {
     this.socialService.getPendingRequests().subscribe({
       next: (res: any) => {
         this.pendingRequests = res.Notification || [];
-        
+
         if (res.ActivityNotifications && res.ActivityNotifications.length > 0) {
           const mappedHistory = res.ActivityNotifications.map((notif: any) => ({
             id: notif._id,
