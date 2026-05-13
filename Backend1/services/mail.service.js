@@ -1,14 +1,14 @@
 const nodemailer = require("nodemailer");
 
 const transporter = nodemailer.createTransport({
-  service: "gmail",
-  port: 465,
-  host: "smtp.gmail.com",
-  secure: true,
+
+  port: 587,
+  host: "smtp-relay.brevo.com",
+  secure: false,
   auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
+    user: process.env.BREVO_LOGIN,
+    pass: process.env.BREVO_PASSWORD,
+  }
 });
 
 exports.sendResetPasswordMail = async (toEmail, resetLink) => {
