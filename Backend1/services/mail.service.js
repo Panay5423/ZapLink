@@ -1,8 +1,7 @@
 const nodemailer = require("nodemailer");
 
 const transporter = nodemailer.createTransport({
-
-  port: 587,
+  port: 2525,
   host: "smtp-relay.brevo.com",
   secure: false,
   auth: {
@@ -13,7 +12,7 @@ const transporter = nodemailer.createTransport({
 
 exports.sendResetPasswordMail = async (toEmail, resetLink) => {
   return transporter.sendMail({
-    from: `"Password Reset" <${process.env.EMAIL_USER}>`,
+    from: `"Password Reset" <${process.env.BREVO_LOGIN}>`,
     to: toEmail,
     subject: "Reset Your Password",
     html: `
