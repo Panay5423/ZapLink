@@ -54,6 +54,8 @@ exports.registerUser = async (req, res) => {
     await newUser.save();
 
     try {
+      await transporter.verify();
+      console.log("SMTP Ready");
       await transporter.sendMail({
         from: `"Verification" <${process.env.EMAIL_USER}>`,
         to: email,
@@ -168,10 +170,10 @@ exports.sendResetMail = async (req, res) => {
     user.resetPasswordToken = hashedToken;
     user.resetPasswordExpires = Date.now() + 30 * 60 * 1000;
     await user.save();
-    
+
     const resetLink = `http://localhost:4200/reset-password/${rawToken}`;
     await sendResetPasswordMail(email, resetLink);
-    
+
     return res.status(200).json({ success: true, message: "password reset link send ", user });
   } catch (err) {
     console.error(err);
