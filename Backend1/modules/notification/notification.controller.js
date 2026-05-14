@@ -5,7 +5,7 @@ exports.GetNotification = async (req, res) => {
     try {
         const userid = req.user.id;
 
-        // Fetch pending follow requests
+        // Fetch pending follow requests for the current user
         const pendingRequest = await FollowRequest.find({
             to: userid,
             status: "pending"
