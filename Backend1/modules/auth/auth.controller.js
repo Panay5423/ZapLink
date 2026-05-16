@@ -54,8 +54,6 @@ exports.registerUser = async (req, res) => {
     await newUser.save();
 
     try {
-      await transporter.verify();
-      console.log("SMTP Ready");
       await transporter.sendMail({
         from: `"Verification" <${process.env.EMAIL_USER}>`,
         to: email,
