@@ -1,4 +1,4 @@
-export const  environment = {
+export const environment = {
     type: "baseURL",
-    BaseAPiURL: 'https://refinance-stat-liked-storm.trycloudflare.com/api/' 
+    BaseAPiURL: 'https://intent-with-incurred-lifetime.trycloudflare.com'
 }
