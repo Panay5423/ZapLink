@@ -134,7 +134,7 @@
 
                 <div class="nav-buttons">
                     <button type="button" class="btn-secondary" (click)="back()">Back</button>
-                    <button type="button" class="btn-primary" (click)="submit()">Create Account</button>
+                    <button type="button" class="btn-primary" (click)="submit()" [disabled]="isLoading">{{ isLoading ? 'Creating...' : 'Create Account' }}</button>
                 </div>
             </div>
 
@@ -152,7 +152,7 @@
                     <input class="otp-input" maxlength="6" placeholder="Enter code"
                         formControlName="verificationCode" />
 
-                    <button class="btn-primary full" (click)="verify()">
+                    <button class="btn-primary full" (click)="verify()" [disabled]="isLoading">
                         Verify & Continue →
                     </button>
 

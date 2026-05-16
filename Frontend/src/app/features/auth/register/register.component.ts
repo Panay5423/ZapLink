@@ -21,6 +21,7 @@ export class RegisterComponent {
   isDarkMode: boolean = false;
   showError: boolean = false;
   errorMessage: string = '';
+  isLoading: boolean = false;
 
   toggleTheme() {
     this.isDarkMode = !this.isDarkMode;
@@ -84,7 +85,14 @@ export class RegisterComponent {
     console.log("fucntion run")
     if (this.registerForm.invalid) {
       console.log("somehting went wrong ")
+      this.errorMessage = 'Please fill all required fields correctly.';
+      this.showError = true;
+      setTimeout(() => this.showError = false, 3000);
+      return;
     };
+
+    if (this.isLoading) return;
+    this.isLoading = true;
 
     const formValue = this.registerForm.value;
     const formData = new FormData();
@@ -102,6 +110,7 @@ export class RegisterComponent {
     console.log('FINAL DATA', formValue);
     this.authService.register(formData).subscribe({
       next: (res) => {
+        this.isLoading = false;
         console.log("responce.........", res);
         if (res.success) {
           this.verifyform.patchValue({ verificationemail: res.user.email });
@@ -112,9 +121,11 @@ export class RegisterComponent {
         }
       },
       error: (err) => {
+        this.isLoading = false;
         console.log(err);
         this.errorMessage = err.error?.message || 'Registration failed. Please try again.';
         this.showError = true;
+
         setTimeout(() => {
           this.showError = false;
         }, 3000);
@@ -123,9 +134,12 @@ export class RegisterComponent {
   }
 
   verify() {
+    if (this.isLoading) return;
+    this.isLoading = true;
     console.log(this.verifyform.value);
     this.authService.verify(this.verifyform.value).subscribe({
       next: (res) => {
+        this.isLoading = false;
         console.log(res);
         if (res.success) {
           this.showVerify = true;
@@ -134,7 +148,11 @@ export class RegisterComponent {
         }
       },
       error: (err) => {
+        this.isLoading = false;
         console.log(err);
+        this.errorMessage = err.error?.message || 'Verification failed. Please try again.';
+        this.showError = true;
+        setTimeout(() => this.showError = false, 3000);
       }
     })
   }

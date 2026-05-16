@@ -21,10 +21,15 @@ export class LoginComponent {
   }
   showError = false;
   errorMessage = "";
+  isLoading = false;
+
   submit() {
+    if (this.isLoading) return;
+    this.isLoading = true;
     console.log(this.loginForm);
     this.auth.login(this.loginForm).subscribe({
       next: (res: any) => {
+        this.isLoading = false;
         console.log(res);
         if (res.success) {
           console.log("Login successful");
@@ -38,8 +43,9 @@ export class LoginComponent {
 
       },
       error: (err: any) => {
+        this.isLoading = false;
         console.log(err);
-        this.showNotification(err.error.message);
+        this.showNotification(err.error?.message || "Login failed");
 
       }
     });
