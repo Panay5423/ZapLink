@@ -84,6 +84,8 @@ export class RegisterComponent {
   submit() {
     console.log("fucntion run")
     if (this.registerForm.invalid) {
+      console.log(this.registerForm.value);
+      console.log(this.registerForm.invalid);
       console.log("somehting went wrong ")
       this.errorMessage = 'Please fill all required fields correctly.';
       this.showError = true;
