@@ -1,4 +1,4 @@
 export const environment = {
     type: "baseURL",
-    BaseAPiURL: 'https://intent-with-incurred-lifetime.trycloudflare.com'
+    BaseAPiURL: 'https://legs-authors-celebration-dale.trycloudflare.com/api/'
 }
