@@ -42,7 +42,7 @@ export class RegisterComponent {
       bio: [''],
       dob: ['', Validators.required],
       phone: ['', Validators.required],
-      address: [''],
+
 
 
       isPrivate: [false],
