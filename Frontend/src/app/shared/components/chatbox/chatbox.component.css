@@ -594,3 +594,17 @@
 .read-receipt.is-read {
   color: #00d2ff;
 }
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .chatbox-content {
+    width: 100vw;
+    border-left: none;
+  }
+
+  .chatbox-overlay {
+    /* Ensure it completely covers mobile screen */
+    height: 100%;
+    height: -webkit-fill-available;
+  }
+}

@@ -305,3 +305,73 @@ body.dark .profile-dropdown-menu {
     from { opacity: 0; transform: scale(0.95); }
     to { opacity: 1; transform: scale(1); }
 }
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    /* Hide sidebar by default on mobile, slide out to the left */
+    .sidebar {
+        transform: translateX(-100%);
+        width: 250px;
+        box-shadow: none;
+    }
+
+    /* When the menu button is clicked and it's NOT collapsed (meaning it is open) */
+    .app-shell:not(.collapsed) .sidebar {
+        transform: translateX(0);
+        box-shadow: 2px 0 15px rgba(0,0,0,0.5);
+    }
+
+    /* Full width content area */
+    .app-right {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .app-shell.collapsed .app-right {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .main {
+        padding: 15px 10px;
+    }
+
+    /* Profile UI adjustments */
+    .profile-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 20px;
+        gap: 16px;
+    }
+
+    .profile-avatar img {
+        width: 100px;
+        height: 100px;
+        border-width: 3px;
+    }
+
+    .profile-info {
+        align-items: center;
+    }
+
+    .profile-info h2 {
+        font-size: 22px;
+    }
+
+    .profile-stats {
+        gap: 20px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .profile-actions {
+        justify-content: center;
+        width: 100%;
+    }
+
+    .profile-actions .btn {
+        flex: 1;
+        justify-content: center;
+    }
+}
