@@ -20,8 +20,10 @@
       <button class="close-btn" (click)="close()"><i class='bx bx-x'></i></button>
     </div>
 
-    <!-- Image -->
-    <div class="story-image-container">
+    <!-- Image (hold to pause) -->
+    <div class="story-image-container"
+         (mousedown)="pauseStory()" (mouseup)="resumeStory()"
+         (touchstart)="pauseStory()" (touchend)="resumeStory()">
       <img [src]="getStoryImageUrl(getCurrentStory().mediaPath)" class="story-image" />
     </div>
 

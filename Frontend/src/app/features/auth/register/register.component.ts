@@ -16,7 +16,7 @@ export class RegisterComponent {
 
   step: number = 1;
   profilePreview: string | ArrayBuffer | null = null;
-  emial: string = '';
+  email: string = '';
   showVerify: boolean = false;
   isDarkMode: boolean = false;
   showError: boolean = false;
@@ -52,7 +52,7 @@ export class RegisterComponent {
 
     this.verifyform = this.fb.group({
       verificationCode: ['', Validators.required],
-      verificationemail: [this.emial || '', Validators.required]
+      verificationemail: [this.email || '', Validators.required]
     });
   }
 
@@ -82,15 +82,7 @@ export class RegisterComponent {
   }
 
   submit() {
-    console.log("fucntion run")
     if (this.registerForm.invalid) {
-      console.log("Form is invalid. Invalid fields:");
-      Object.keys(this.registerForm.controls).forEach(key => {
-        const control = this.registerForm.get(key);
-        if (control?.invalid) {
-          console.log(key, control.errors);
-        }
-      });
       this.errorMessage = 'Please fill all required fields correctly.';
       this.showError = true;
       setTimeout(() => this.showError = false, 3000);
@@ -113,14 +105,14 @@ export class RegisterComponent {
       formData.append('profilePicture', formValue.profilePic);
     }
 
-    console.log('FINAL DATA', formValue);
+
     this.authService.register(formData).subscribe({
       next: (res) => {
         this.isLoading = false;
-        console.log("responce.........", res);
+
         if (res.success) {
           this.verifyform.patchValue({ verificationemail: res.user.email });
-          console.log("token", res.token);
+
           localStorage.setItem('token', res.token);
           this.step = 4;
 
@@ -128,7 +120,7 @@ export class RegisterComponent {
       },
       error: (err) => {
         this.isLoading = false;
-        console.log(err);
+
         this.errorMessage = err.error?.message || 'Registration failed. Please try again.';
         this.showError = true;
 
@@ -142,11 +134,11 @@ export class RegisterComponent {
   verify() {
     if (this.isLoading) return;
     this.isLoading = true;
-    console.log(this.verifyform.value);
+
     this.authService.verify(this.verifyform.value).subscribe({
       next: (res) => {
         this.isLoading = false;
-        console.log(res);
+
         if (res.success) {
           this.showVerify = true;
           this.step = 5;
@@ -155,7 +147,7 @@ export class RegisterComponent {
       },
       error: (err) => {
         this.isLoading = false;
-        console.log(err);
+
         this.errorMessage = err.error?.message || 'Verification failed. Please try again.';
         this.showError = true;
         setTimeout(() => this.showError = false, 3000);

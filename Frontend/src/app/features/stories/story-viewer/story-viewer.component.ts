@@ -32,6 +32,7 @@ export class StoryViewerComponent implements OnInit, OnDestroy {
 
   currentGroupIndex: number = 0;
   currentStoryIndex: number = 0;
+  isPaused: boolean = false;
 
   progressInterval: any;
   progressValue: number = 0; // 0 to 100
@@ -60,14 +61,27 @@ export class StoryViewerComponent implements OnInit, OnDestroy {
   startStory() {
     this.clearTimer();
     this.progressValue = 0;
+    this.isPaused = false;
     
     // 5 seconds per story = 50 intervals of 100ms
     this.progressInterval = setInterval(() => {
-      this.progressValue += 2; // +2% every 100ms
-      if (this.progressValue >= 100) {
-        this.nextStory();
+      if (!this.isPaused) {
+        this.progressValue += 2; // +2% every 100ms
+        if (this.progressValue >= 100) {
+          this.nextStory();
+        }
       }
     }, 100);
+  }
+
+  /** Pause story progress (long-press / hold) */
+  pauseStory() {
+    this.isPaused = true;
+  }
+
+  /** Resume story progress (release hold) */
+  resumeStory() {
+    this.isPaused = false;
   }
 
   clearTimer() {
