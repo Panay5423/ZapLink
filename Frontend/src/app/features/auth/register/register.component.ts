@@ -84,14 +84,18 @@ export class RegisterComponent {
   submit() {
     console.log("fucntion run")
     if (this.registerForm.invalid) {
-      console.log(this.registerForm.value);
-      console.log(this.registerForm.invalid);
-      console.log("somehting went wrong ")
+      console.log("Form is invalid. Invalid fields:");
+      Object.keys(this.registerForm.controls).forEach(key => {
+        const control = this.registerForm.get(key);
+        if (control?.invalid) {
+          console.log(key, control.errors);
+        }
+      });
       this.errorMessage = 'Please fill all required fields correctly.';
       this.showError = true;
       setTimeout(() => this.showError = false, 3000);
       return;
-    };
+    }
 
     if (this.isLoading) return;
     this.isLoading = true;

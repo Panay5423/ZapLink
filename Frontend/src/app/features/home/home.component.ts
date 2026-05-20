@@ -137,4 +137,9 @@ export class HomeComponent implements OnInit {
       }
     });
   }
+
+  /** TrackBy function for feed posts — improves rendering performance */
+  trackByPostId(index: number, post: any): string {
+    return post._id || index.toString();
+  }
 }

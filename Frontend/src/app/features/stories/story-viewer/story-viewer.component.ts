@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { environment } from '../../../../environments/environment';
 
@@ -10,6 +10,22 @@ import { environment } from '../../../../environments/environment';
   styleUrls: ['./story-viewer.component.css']
 })
 export class StoryViewerComponent implements OnInit, OnDestroy {
+
+  /** Keyboard navigation: Esc to close, Arrow keys to navigate stories */
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboard(event: KeyboardEvent) {
+    switch (event.key) {
+      case 'Escape':
+        this.close();
+        break;
+      case 'ArrowRight':
+        this.nextStory();
+        break;
+      case 'ArrowLeft':
+        this.prevStory();
+        break;
+    }
+  }
   @Input() storyGroups: any[] = [];
   @Input() initialGroupIndex: number = 0;
   @Output() closeViewer = new EventEmitter<void>();

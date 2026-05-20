@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, signal, computed } from '@angular/core';
 
 export interface AppNotification {
   id: string;
@@ -18,6 +18,9 @@ export class NotificationService {
 
   private historySignal = signal<AppNotification[]>([]);
   public history = this.historySignal.asReadonly();
+
+  /** Computed signal for unread notification count (badge display) */
+  public unreadCount = computed(() => this.notificationsSignal().length);
 
   constructor() { }
 
@@ -41,6 +44,11 @@ export class NotificationService {
 
   clearHistory() {
     this.historySignal.set([]);
+  }
+
+  /** Mark all current toast notifications as read (clears badge) */
+  markAllAsRead() {
+    this.notificationsSignal.set([]);
   }
 
   setHistory(notifications: AppNotification[]) {

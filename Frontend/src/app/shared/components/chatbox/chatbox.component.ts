@@ -172,13 +172,17 @@ export class ChatboxComponent implements OnInit {
     const pic = user.profilePicture || user.avatar;
     if (pic) {
       if (pic.startsWith('http')) return pic;
-      const baseUrl = environment.BaseAPiURL.endsWith('/') ? environment.BaseAPiURL.slice(0, -1) : environment.BaseAPiURL;
+      let hostUrl = environment.BaseAPiURL;
+      if (hostUrl.endsWith('/api/')) hostUrl = hostUrl.replace('/api/', '');
+      else if (hostUrl.endsWith('/api')) hostUrl = hostUrl.replace('/api', '');
+      else if (hostUrl.endsWith('/')) hostUrl = hostUrl.slice(0, -1);
+
       let path = pic;
       if (!path.includes('uploads/')) {
         path = path.startsWith('/') ? `uploads${path}` : `uploads/${path}`;
       }
       path = path.startsWith('/') ? path : `/${path}`;
-      return `${baseUrl}${path}`;
+      return `${hostUrl}${path}`;
     }
     return `https://ui-avatars.com/api/?name=${user.username || user.name || 'User'}&background=random`;
   }
