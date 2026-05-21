@@ -8,6 +8,7 @@ function SendNotification(targetUserId, message, currentUserId) {
     console.log("socket", socket)
     if (!socket) {
         console.log("user is offline")
+        console.log("user removing from OnlineUser", OnlineUser)
         return;
 
     }
