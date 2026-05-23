@@ -5,6 +5,7 @@ const nodemailer = require("nodemailer");
 const crypto = require("crypto");
 const bcrypt = require("bcrypt");
 const { sendResetPasswordMail } = require("../../services/mail.service");
+const { console } = require("inspector");
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -114,6 +115,7 @@ exports.verifyUserMail = async (req, res) => {
     }
   } catch (err) {
     console.log(err);
+    console.log("verification mail")
     return res.status(500).json({ success: false, message: "Verification failed" });
   }
 };
